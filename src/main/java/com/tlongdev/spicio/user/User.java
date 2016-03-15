@@ -1,4 +1,4 @@
-package com.tlongdev.spicio.model;
+package com.tlongdev.spicio.user;
 
 import org.springframework.data.annotation.Id;
 
