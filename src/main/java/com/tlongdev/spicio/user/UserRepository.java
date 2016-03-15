@@ -10,4 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserRepository extends MongoRepository<User, Long> {
     User findUserById(Long id);
+
+    User findUserByFacebookId(String facebookId);
+
+    User findUserByGoogleId(String googleId);
 }

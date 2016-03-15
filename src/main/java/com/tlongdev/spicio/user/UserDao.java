@@ -7,4 +7,10 @@ package com.tlongdev.spicio.user;
 public interface UserDao {
 
     User getUser(long userId);
+
+    User saveUser(User user);
+
+    User getUserByFacebookId(String facebookId);
+
+    User getUserByGoogleId(String googleId);
 }
