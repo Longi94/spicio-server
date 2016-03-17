@@ -489,6 +489,9 @@ paths:
         404:
           description: "User or series not found"
     post:
+      tags:
+        - user
+        - series
       summary: "Add episode"
       description: |
         Add an episode to the users wacthed/liked/skipped lists.
@@ -556,6 +559,9 @@ paths:
         404:
           description: "User, series or episode not found"
     delete:
+      tags:
+        - user
+        - series
       summary: "Delete episode fomr user's database"
       description: |
         Delete an episode record from the user's database. Should be called
