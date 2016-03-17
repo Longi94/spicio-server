@@ -1,139 +1,685 @@
 swagger: "2.0"
 info:
-  version: 1.0.0
-  title: Spicio API
-  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification
-  termsOfService: http://swagger.io/terms/
+  version: "1.0.0"
+  title: "Spicio API"
+  description: "Spicio Server API"
   contact:
-    name: Swagger API Team
-    email: foo@example.com
-    url: http://madskristensen.net
+    name: "dev@tlongdev.com"
   license:
-    name: MIT
-    url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
-host: petstore.swagger.io
-basePath: /api
-schemes:
-  - http
-consumes:
-  - application/json
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: tlongdev.com
+basePath: /api/v1
 produces:
   - application/json
+consumes:
+  - application/json
+schemes:
+  - http
 paths:
-  /pets:
+  /users:
     get:
+      tags:
+        - user
+      summary: "Search for user"
       description: |
-        Returns all pets from the system that the user has access to
-        Nam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.
-        Sed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.
-      operationId: findPets
+        Search for a `User` by their name and/or their e-mail address.
       parameters:
-        - name: tags
+        - name: query
           in: query
-          description: tags to filter by
-          required: false
-          type: array
-          collectionFormat: csv
-          items:
-            type: string
-        - name: limit
-          in: query
-          description: maximum number of results to return
-          required: false
-          type: integer
-          format: int32
+          description: "The text to search against."
+          required: true
+          type: string
       responses:
         200:
-          description: pet response
+          description: "A list of `User` objacts matching the search criteria."
           schema:
             type: array
             items:
-              $ref: '#/definitions/Pet'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+              $ref: "#/definitions/User"
+        400:
+          description: "Missing search criteria parameter"
     post:
-      description: Creates a new pet in the store.  Duplicates are allowed
-      operationId: addPet
+      tags:
+        - user
+      summary: "Register/authenticate user"
+      description: |
+        Register a new user to the database. At least one of the ID fields must
+        be present in the body. For now this method returns a successful
+        registration response if the user already exists. (It might be a better
+        practice to give the user the option to link their facebook and google
+        account)
       parameters:
-        - name: pet
+        - name: user
           in: body
-          description: Pet to add to the store
+          description: "The display name of the user."
           required: true
           schema:
-            $ref: '#/definitions/NewPet'
+            type: object
+            properties:
+              name:
+                type: string
+                description: "The name of the user."
+              email:
+                type: string
+                description: "The email address of the user."
+              facebook_id:
+                type: string
+                description: "The Facebook ID of the user if known."
+              google_id:
+                type: string
+                description: "The Google+ ID of the user if known."
       responses:
         200:
-          description: pet response
+          description: |
+            Successful registration. This method will return the registered
+            `User` so the client may store the ID of the user.
           schema:
-            $ref: '#/definitions/Pet'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-  /pets/{id}:
+            $ref: "#/definitions/User"
+        400:
+          description: "Bad request body"
+
+  /users/{id}:
     get:
-      description: Returns a user based on a single ID, if the user does not have access to the pet
-      operationId: find pet by id
+      tags:
+        - user
+      summary: "Get user"
+      description: |
+        Find a user with the given ID. The `full` parameter should only be set
+        to true when the user logs in to query and cache the data and should not
+        be set to true if the client us querying other user's data.
       parameters:
         - name: id
           in: path
-          description: ID of pet to fetch
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: full
+          in: query
+          description:  |
+            If set to true, the method will return all the data the database has
+            about the user
+          required: false
+          type: boolean
+      responses:
+        200:
+          description: "Returns the `User` object with the ID if it exists."
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+    delete:
+      tags:
+        - user
+      summary: "Delete user"
+      description: |
+        Delete a user and all it's data from the database. This includes all the
+        series and watched episodes.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+
+  /users/{id}/feed:
+    get:
+      tags:
+        - user
+      summary: "Get user's feed"
+      description: |
+        Get the news feed items of the user with the given ID. This is based on
+        the activity of the user and the user's friends" activity. As this
+        method can return a lot of data, pagination is mandatory.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: offset
+          in: query
+          description: "Pagination offset"
+          required: true
+          type: number
+          format: int32
+        - name: limit
+          in: query
+          description: "Pagination limit"
+          required: true
+          type: number
+          format: int32
+      responses:
+        200:
+          description: |
+            A list of `Action` objects that represent the news feed of the user.
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Action"
+        400:
+          description: "Invalid IDs supplied or missing parameters"
+        404:
+          description: "User not found"
+
+  /users/{id}/history:
+    get:
+      tags:
+        - user
+      summary: "Get users history"
+      description: |
+        Get the history if the user with the given id. It will return the
+        activity of the user in chronological order. As this  method can return
+        a lot of data, pagination is mandatory.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: offset
+          in: query
+          description: "Pagination offset"
+          required: true
+          type: number
+          format: int32
+        - name: limit
+          in: query
+          description: "Pagination limit"
+          required: true
+          type: number
+          format: int32
+      responses:
+        200:
+          description: |
+            A list of `Action` objects that represent the history of the user.
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Action"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+
+  /users/{id}/discover:
+    get:
+      tags:
+        - user
+        - series
+      summary: "Get recommendations for user"
+      description: |
+        Get a list of recommended series for the user to watch. The curated list
+        is created by the server with some voodoo black magic.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: "A list of `Series` objects."
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Series"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+    post:
+      tags:
+        - user
+        - series
+      summary: "Mark show as 'not interested'"
+      description: |
+        Call this method if the user is not interested in a show, so that it
+        won't be suggested to the user again in the future. This is time based
+        meaning the engine might select the show again in the future. The
+        back-off time is reasing exponentially with the number of 'not
+        interested' request.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: series_id
+          in: formData
+          description: "trakt ID of the series"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: "Show succesfully marked as not interested"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User or series not found"
+
+  /users/{id}/friends:
+    get:
+      tags:
+        - user
+      summary: "Get users friends"
+      description: |
+        Get a detailed list of friends of the user with the given ID.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: |
+            A list of `User` objects which are the friends of the user.
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/User"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+    post:
+      tags:
+        - user
+      summary: "Add friend to user"
+      description: |
+        Add another user as a friend to the user with the given id. The current
+        user will also be added to the other user's friends list.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: friend_id
+          in: formData
+          description: "ID of the friend to add"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: |
+            User successfully added to the friends list. Returns the details of
+            the friend.
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+    delete:
+      tags:
+        - user
+      summary: "Delete friend"
+      description: |
+        Remove a user from the user's friend list. The user will also be removed
+        from the friend's friendlist.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: friend_id
+          in: formData
+          description: "ID of the friend to add"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: OK
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+
+  /users/{id}/series:
+    get:
+      tags:
+        - user
+        - series
+      summary: "Get saved series"
+      description: "Returns a list of series the user has added."
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/Series"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+    post:
+      tags:
+        - user
+        - series
+      summary: "Add series "
+      description: |
+        Save series to the user. Details of the series is needed, since if the
+        series doesn't exist in that database yet, it will be insterted.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: series
+          in: body
+          description: "The series to add to he user"
+          required: true
+          schema:
+            $ref: "#/definitions/Series"
+      responses:
+        200:
+          description: "The series was successfully added"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+    delete:
+      tags:
+        - user
+        - series
+      summary: "Remove series"
+      description: |
+        Delete a series from the user's saved series. This will not delete the
+        series record itself, only the relation between the series and the user.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: series_id
+          in: formData
+          description: "The series to add to he user."
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: "Series successfully deleted"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User not found"
+
+  /users/{id}/series/{series_id}/episodes:
+    get:
+      tags:
+        - user
+        - series
+      summary: "Get user's episodes"
+      description: |
+        Returns the IDs of the watched, liked and skipped episodes of the user
+        and the given series.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: series_id
+          in: path
+          description: "The series to add to he user"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              watched:
+                type: array
+                items:
+                  type: number
+                  format: int64
+              liked:
+                type: array
+                items:
+                  type: number
+                  format: int64
+              skipped:
+                type: array
+                items:
+                  type: number
+                  format: int64
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User or series not found"
+    post:
+      summary: "Add episode"
+      description: |
+        Add an episode to the users wacthed/liked/skipped lists.
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: series_id
+          in: path
+          description: "The ID of the series"
+          required: true
+          type: number
+          format: int64
+        - name: episode
+          in: formData
+          description: "The trakt ID of the episode."
           required: true
           type: integer
           format: int64
       responses:
         200:
-          description: pet response
-          schema:
-            $ref: '#/definitions/Pet'
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
-    delete:
-      description: deletes a single pet based on the ID supplied
-      operationId: deletePet
+          description: "Successfully added episode"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User or series not found"
+
+  /users/{id}/series/{series_id}/episodes/{episode_id}:
+    put:
+      tags:
+        - user
+        - series
+      summary: "Update status of episode"
+      description: |
+        Update the watched/liked/skipped status of a episode. Should be called
+        when the client is sure that the record exists and if the change doesn't
+        set all the attributes to false (when the record should be deleted)
       parameters:
         - name: id
           in: path
-          description: ID of pet to delete
+          description: "ID of the user"
           required: true
-          type: integer
+          type: number
+          format: int64
+        - name: series_id
+          in: path
+          description: "The ID of the series"
+          required: true
+          type: number
+          format: int64
+        - name: episode_id
+          in: path
+          description: "The ID of the episode"
+          required: true
+          type: number
           format: int64
       responses:
-        204:
-          description: pet deleted
-        default:
-          description: unexpected error
-          schema:
-            $ref: '#/definitions/Error'
+        200:
+          description: "Successfully updated"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User, series or episode not found"
+    delete:
+      summary: "Delete episode fomr user's database"
+      description: |
+        Delete an episode record from the user's database. Should be called
+        when the status of the episode is set to "not watched', "not liked" and
+        "not skipped"
+      parameters:
+        - name: id
+          in: path
+          description: "ID of the user"
+          required: true
+          type: number
+          format: int64
+        - name: series_id
+          in: path
+          description: "The ID of the series"
+          required: true
+          type: number
+          format: int64
+        - name: episode_id
+          in: path
+          description: "The ID of the episode"
+          required: true
+          type: number
+          format: int64
+      responses:
+        200:
+          description: "Successfully deleted"
+        400:
+          description: "Invalid IDs supplied"
+        404:
+          description: "User, series or episode not found"
+
 definitions:
-  Pet:
-    allOf:
-      - $ref: '#/definitions/NewPet'
-      - required:
-        - id
-        properties:
-          id:
-            type: integer
-            format: int64
-  NewPet:
-    required:
-      - name
+  User:
+    type: object
     properties:
+      id:
+        type: integer
+        format: int64
+        description: "Unique identifier of the user."
+        example: 0
       name:
         type: string
-      tag:
+        description: "The name of the user."
+        example: "John Doe"
+      email:
         type: string
-  Error:
-    required:
-      - code
-      - message
+        description: "The email address of the user."
+        example: "john@doe.com"
+      facebook_id:
+        type: string
+        description: "The Facebook ID of the user if known."
+        example: "123456789"
+      google_id:
+        type: string
+        description: "The Google+ ID of the user if known."
+        example: "123456789"
+  Action:
+    type: object
     properties:
-      code:
+      id:
+        type: integer
+        format: int64
+        example: 0
+        description: "Unique identifier of the feed item."
+      timestamp:
+        type: integer
+        format: int64
+        example: 0
+        description: "The unix timestamp of the creation."
+      type:
         type: integer
         format: int32
-      message:
+        example: 0
+        description: "The type enum of the action."
+      culprit:
+        $ref: "#/definitions/User"
+      victim:
+        $ref: "#/definitions/User"
+      series:
+        $ref: "#/definitions/Series"
+      episode:
+        $ref: "#/definitions/Episode"
+  Series:
+    type: object
+    properties:
+      trakt_id:
+        type: integer
+        format: int64
+        example: 0
+        description: "The trakt ID of the series."
+      title:
         type: string
+        example: "Game of Thrones"
+        description: "The title of the show."
+      thumb:
+        type: string
+        example: "example.com"
+        description: "Link to an thumb image for the show"
+  Episode:
+    type: object
+    properties:
+      trakt_id:
+        type: integer
+        format: int64
+        example: 0
+        description: "The trakt ID of the series."
+      number:
+        type: integer
+        format: int32
+        example: 1
+        description: "The number of the episode"
+      season:
+        type: integer
+        format: int32
+        example: 1
+        description: "The season of the episode"
+      title:
+        type: string
+        format: int32
+        example: "Winter is Coming"
+        description: "The title of the episode"
+      thumb:
+        type: string
+        format: int32
+        example: "example.com"
+        description: "The link to the thumb image for the episode"
