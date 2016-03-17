@@ -591,6 +591,10 @@ paths:
 definitions:
   User:
     type: object
+    required:
+      - id
+      - name
+      - email
     properties:
       id:
         type: integer
@@ -615,6 +619,11 @@ definitions:
         example: "123456789"
   Action:
     type: object
+    required:
+      - id
+      - timestamp
+      - type
+      - culprit
     properties:
       id:
         type: integer
@@ -641,6 +650,8 @@ definitions:
         $ref: "#/definitions/Episode"
   Series:
     type: object
+    required:
+      - trakt_id
     properties:
       trakt_id:
         type: integer
@@ -657,6 +668,8 @@ definitions:
         description: "Link to an thumb image for the show"
   Episode:
     type: object
+    required:
+      - trakt_id
     properties:
       trakt_id:
         type: integer
