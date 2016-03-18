@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.domain;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import java.util.Set;
  * @author Long
  * @since 2016. 03. 15.
  */
+@Document(collection = "users")
 public class User {
 
     @Id private long id;

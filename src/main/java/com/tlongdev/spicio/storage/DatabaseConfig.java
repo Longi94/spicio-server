@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Scope;
 public class DatabaseConfig {
 
     @Bean
-    @Scope("singleton")
+    @Scope(value = "singleton")
     UserDao userDaoBean() {
         return new UserDaoImpl();
     }
