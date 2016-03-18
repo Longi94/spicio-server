@@ -106,7 +106,30 @@ paths:
         200:
           description: "Returns the `User` object with the ID if it exists."
           schema:
-            $ref: "#/definitions/User"
+            type: object
+            properties:
+              user:
+                $ref: "#/definitions/User"
+              series:
+                type: array
+                items:
+                  $ref: "#/definitions/Series"
+              episodes:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    trakt_id:
+                      type: integer
+                      format: int64
+                      description: "Trakt ID of the episode"
+                    watched:
+                      type: integer
+                      format: int32
+                      description: "0 if not watched, 1 if watched, 2 if skipped"
+                    liked:
+                      type: boolean
+                      description: "Wether the user liked the episode"
         400:
           description: "Invalid IDs supplied"
         404:
@@ -127,7 +150,7 @@ paths:
           format: int64
       responses:
         200:
-          description: OK
+          description: "Successfully deleted all data"
         400:
           description: "Invalid IDs supplied"
         404:
