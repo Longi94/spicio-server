@@ -1,5 +1,7 @@
-package com.tlongdev.spicio.user;
+package com.tlongdev.spicio.storage.dao;
 
+import com.tlongdev.spicio.domain.User;
+import com.tlongdev.spicio.storage.mongo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**

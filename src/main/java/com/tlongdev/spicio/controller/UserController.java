@@ -1,5 +1,7 @@
-package com.tlongdev.spicio.user;
+package com.tlongdev.spicio.controller;
 
+import com.tlongdev.spicio.domain.User;
+import com.tlongdev.spicio.storage.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

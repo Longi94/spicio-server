@@ -1,4 +1,6 @@
-package com.tlongdev.spicio.user;
+package com.tlongdev.spicio.storage.dao;
+
+import com.tlongdev.spicio.domain.User;
 
 /**
  * @author Long
