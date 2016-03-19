@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.controller;
 
 import com.tlongdev.spicio.domain.User;
+import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,10 +15,11 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
  * @since 2016. 03. 15.
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
 
     @Autowired private UserDao userDao;
+    @Autowired private SequenceDao sequenceDao;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public User getUser(@PathVariable long userId) {
@@ -32,16 +34,17 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody User user) {
-
         if (user.getFacebookId() != null) {
             User result = userDao.getUserByFacebookId(user.getFacebookId());
             if (result == null) {
+                user.setId(sequenceDao.nextValue("user"));
                 result = userDao.saveUser(user);
             }
             return mapToResponseEntity(result);
         } else if (user.getGoogleId() != null) {
             User result = userDao.getUserByGoogleId(user.getGoogleId());
             if (result == null) {
+                user.setId(sequenceDao.nextValue("user"));
                 result = userDao.saveUser(user);
             }
             return mapToResponseEntity(result);
