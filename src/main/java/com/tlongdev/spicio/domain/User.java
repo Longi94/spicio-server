@@ -27,6 +27,8 @@ public class User {
 
     private Set<Long> friends;
 
+    private Set<Integer> series;
+
     public long getId() {
         return id;
     }
