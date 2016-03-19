@@ -1,5 +1,6 @@
 package com.tlongdev.spicio.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -18,8 +19,10 @@ public class User {
 
     private String email;
 
+    @JsonProperty("facebook_id")
     private String facebookId;
 
+    @JsonProperty("google_id")
     private String googleId;
 
     private Set<Long> friends;
