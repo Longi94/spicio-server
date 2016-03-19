@@ -4,11 +4,13 @@ import com.tlongdev.spicio.domain.Sequence;
 import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.mongo.SequenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author Long
  * @since 2016. 03. 19.
  */
+@Repository
 public class SequenceDaoImpl implements SequenceDao {
 
     @Autowired private SequenceRepository repository;
