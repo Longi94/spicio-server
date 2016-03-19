@@ -79,4 +79,20 @@ public class User {
     public void setFriends(Set<Long> friends) {
         this.friends = friends;
     }
+
+    public Set<Integer> getSeries() {
+        return series;
+    }
+
+    public void setSeries(Set<Integer> series) {
+        this.series = series;
+    }
+
+    public List<Action> getHistory() {
+        return history;
+    }
+
+    public void setHistory(List<Action> history) {
+        this.history = history;
+    }
 }
