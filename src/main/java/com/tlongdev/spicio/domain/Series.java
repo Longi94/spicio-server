@@ -81,6 +81,8 @@ public class Series {
 
     private String thumb;
 
+    private List<Episode> episodes;
+
     public String getTitle() {
         return title;
     }
