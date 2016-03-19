@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -28,6 +29,8 @@ public class User {
     private Set<Long> friends;
 
     private Set<Integer> series;
+
+    private List<Action> history;
 
     public long getId() {
         return id;
