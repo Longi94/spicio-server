@@ -22,23 +22,18 @@ public class Series {
     private int traktId;
 
     @JsonProperty("slug")
-    @Id
     private String slugName;
 
     @JsonProperty("tvdb_id")
-    @Id
     private int tvdbId;
 
     @JsonProperty("imdb_id")
-    @Id
     private String imdbId;
 
     @JsonProperty("tmdb_id")
-    @Id
     private int tmdbId;
 
     @JsonProperty("tv_rage_id")
-    @Id
     private int tvRageId;
 
     private String overview;

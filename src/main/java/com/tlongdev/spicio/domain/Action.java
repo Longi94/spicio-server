@@ -12,9 +12,9 @@ public class Action {
 
     private int type;
 
-    private User culprit;
+    private UserSimple culprit;
 
-    private User victim;
+    private UserSimple victim;
 
     private Series series;
 
