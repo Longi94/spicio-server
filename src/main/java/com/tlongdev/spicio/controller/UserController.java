@@ -22,14 +22,12 @@ public class UserController {
     @Autowired private SequenceDao sequenceDao;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public User getUser(@PathVariable long userId) {
+    public ResponseEntity<User> getUser(@PathVariable long userId) {
         User user = userDao.getUser(userId);
         if (user == null) {
-            User notFoundUser = new User();
-            notFoundUser.setId(userId);
-            return notFoundUser;
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return user;
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
