@@ -4,11 +4,12 @@ import com.tlongdev.spicio.domain.User;
 import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.net.URI;
 
 /**
  * @author Long
@@ -25,9 +26,9 @@ public class UserController {
     public ResponseEntity<User> getUser(@PathVariable long userId) {
         User user = userDao.getUser(userId);
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.ok(user);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -47,14 +48,13 @@ public class UserController {
             }
             return mapToResponseEntity(result);
         }
-        return new ResponseEntity<>(null, null, HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body(null);
     }
 
     private ResponseEntity<?> mapToResponseEntity(User user) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setLocation(ServletUriComponentsBuilder
+        URI locationUri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(user.getId()).toUri());
-        return new ResponseEntity<>(null, httpHeaders, HttpStatus.CREATED);
+                .buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(locationUri).body(null);
     }
 }
