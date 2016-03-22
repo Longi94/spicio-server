@@ -1,7 +1,8 @@
 package com.tlongdev.spicio.controller;
 
-import com.tlongdev.spicio.converter.UserConverter;
 import com.tlongdev.spicio.controller.request.UserBody;
+import com.tlongdev.spicio.controller.response.UserResponse;
+import com.tlongdev.spicio.converter.UserConverter;
 import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.dao.UserDao;
 import com.tlongdev.spicio.storage.document.UserDocument;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Long
@@ -36,6 +39,22 @@ public class UserController {
         } else {
             return ResponseEntity.ok(UserConverter.convertToUserResponse(user));
         }
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<UserResponse>> searchUser(@RequestParam("query") String query) {
+        if (query == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        List<UserDocument> userDocuments = userDao.fundUsersByName(query);
+        List<UserResponse> users = new LinkedList<>();
+
+        for (UserDocument userDoc : userDocuments) {
+            users.add(UserConverter.convertToUserResponse(userDoc));
+        }
+
+        return ResponseEntity.ok(users);
     }
 
     @RequestMapping(method = RequestMethod.POST)

@@ -1,10 +1,12 @@
 package com.tlongdev.spicio.storage.dao.impl;
 
-import com.tlongdev.spicio.storage.document.UserDocument;
 import com.tlongdev.spicio.storage.dao.UserDao;
+import com.tlongdev.spicio.storage.document.UserDocument;
 import com.tlongdev.spicio.storage.mongo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author Long
@@ -33,5 +35,10 @@ public class UserDaoImpl implements UserDao {
     @Override
     public UserDocument getUserByGoogleId(String googleId) {
         return userRepository.findUserByGoogleId(googleId);
+    }
+
+    @Override
+    public List<UserDocument> fundUsersByName(String name) {
+        return userRepository.findByNameIgnoreCase(name);
     }
 }
