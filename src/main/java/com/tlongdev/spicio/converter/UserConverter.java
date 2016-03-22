@@ -1,5 +1,6 @@
-package com.tlongdev.spicio.controller.converter;
+package com.tlongdev.spicio.converter;
 
+import com.tlongdev.spicio.controller.request.UserBody;
 import com.tlongdev.spicio.controller.response.UserResponse;
 import com.tlongdev.spicio.controller.response.UserResponseFull;
 import com.tlongdev.spicio.storage.document.UserDocument;
@@ -29,5 +30,14 @@ public class UserConverter {
         userResponse.setHistory(user.getHistory());
         userResponse.setSeries(user.getSeries());
         return userResponse;
+    }
+
+    public static UserDocument convertToUserDocument(UserBody userBody) {
+        UserDocument userDocument = new UserDocument();
+        userDocument.setName(userBody.getName());
+        userDocument.setEmail(userBody.getEmail());
+        userDocument.setFacebookId(userBody.getFacebookId());
+        userDocument.setGoogleId(userBody.getGoogleId());
+        return userDocument;
     }
 }

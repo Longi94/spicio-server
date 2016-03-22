@@ -1,9 +1,10 @@
 package com.tlongdev.spicio.controller;
 
-import com.tlongdev.spicio.controller.converter.UserConverter;
-import com.tlongdev.spicio.storage.document.UserDocument;
+import com.tlongdev.spicio.converter.UserConverter;
+import com.tlongdev.spicio.controller.request.UserBody;
 import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.dao.UserDao;
+import com.tlongdev.spicio.storage.document.UserDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,19 +39,21 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addUser(@RequestBody UserDocument user) {
+    public ResponseEntity<?> addUser(@RequestBody UserBody user) {
         if (user.getFacebookId() != null) {
             UserDocument result = userDao.getUserByFacebookId(user.getFacebookId());
             if (result == null) {
-                user.setId(sequenceDao.nextValue("user"));
-                result = userDao.saveUser(user);
+                result = UserConverter.convertToUserDocument(user);
+                result.setId(sequenceDao.nextValue("user"));
+                result = userDao.saveUser(result);
             }
             return mapToResponseEntity(result);
         } else if (user.getGoogleId() != null) {
             UserDocument result = userDao.getUserByGoogleId(user.getGoogleId());
             if (result == null) {
-                user.setId(sequenceDao.nextValue("user"));
-                result = userDao.saveUser(user);
+                result = UserConverter.convertToUserDocument(user);
+                result.setId(sequenceDao.nextValue("user"));
+                result = userDao.saveUser(result);
             }
             return mapToResponseEntity(result);
         }
