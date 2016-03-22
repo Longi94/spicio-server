@@ -1,6 +1,6 @@
 package com.tlongdev.spicio.storage.mongo;
 
-import com.tlongdev.spicio.domain.User;
+import com.tlongdev.spicio.storage.document.UserDocument;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
  * @since 2016. 03. 15.
  */
 @Repository
-public interface UserRepository extends MongoRepository<User, Long> {
-    User findUserById(Long id);
+public interface UserRepository extends MongoRepository<UserDocument, Long> {
+    UserDocument findUserById(Long id);
 
-    User findUserByFacebookId(String facebookId);
+    UserDocument findUserByFacebookId(String facebookId);
 
-    User findUserByGoogleId(String googleId);
+    UserDocument findUserByGoogleId(String googleId);
 }

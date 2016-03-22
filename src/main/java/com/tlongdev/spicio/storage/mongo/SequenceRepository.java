@@ -1,6 +1,6 @@
 package com.tlongdev.spicio.storage.mongo;
 
-import com.tlongdev.spicio.domain.Sequence;
+import com.tlongdev.spicio.storage.document.Sequence;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

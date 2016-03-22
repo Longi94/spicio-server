@@ -1,6 +1,6 @@
 package com.tlongdev.spicio.storage.dao;
 
-import com.tlongdev.spicio.domain.User;
+import com.tlongdev.spicio.storage.document.UserDocument;
 
 /**
  * @author Long
@@ -8,11 +8,11 @@ import com.tlongdev.spicio.domain.User;
  */
 public interface UserDao {
 
-    User getUser(long userId);
+    UserDocument getUser(long userId);
 
-    User saveUser(User user);
+    UserDocument saveUser(UserDocument user);
 
-    User getUserByFacebookId(String facebookId);
+    UserDocument getUserByFacebookId(String facebookId);
 
-    User getUserByGoogleId(String googleId);
+    UserDocument getUserByGoogleId(String googleId);
 }

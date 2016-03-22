@@ -1,4 +1,4 @@
-package com.tlongdev.spicio.domain;
+package com.tlongdev.spicio.storage.document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
@@ -11,7 +11,7 @@ import java.util.List;
  * @since 2016. 03. 19.
  */
 @Document(collection = "")
-public class Series {
+public class SeriesDocument {
 
     private String title;
 
@@ -76,7 +76,7 @@ public class Series {
 
     private String thumb;
 
-    private List<Episode> episodes;
+    private List<EpisodeDocument> episodes;
 
     public String getTitle() {
         return title;

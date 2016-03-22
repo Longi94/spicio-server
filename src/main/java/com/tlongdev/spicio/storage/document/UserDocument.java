@@ -1,4 +1,4 @@
-package com.tlongdev.spicio.domain;
+package com.tlongdev.spicio.storage.document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
@@ -12,7 +12,7 @@ import java.util.Set;
  * @since 2016. 03. 15.
  */
 @Document(collection = "users")
-public class User {
+public class UserDocument {
 
     @Id private long id;
 
@@ -30,7 +30,7 @@ public class User {
 
     private Set<Integer> series;
 
-    private List<Action> history;
+    private List<ActionDocument> history;
 
     public long getId() {
         return id;
@@ -88,11 +88,11 @@ public class User {
         this.series = series;
     }
 
-    public List<Action> getHistory() {
+    public List<ActionDocument> getHistory() {
         return history;
     }
 
-    public void setHistory(List<Action> history) {
+    public void setHistory(List<ActionDocument> history) {
         this.history = history;
     }
 }

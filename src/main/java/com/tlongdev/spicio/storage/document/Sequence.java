@@ -1,4 +1,4 @@
-package com.tlongdev.spicio.domain;
+package com.tlongdev.spicio.storage.document;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

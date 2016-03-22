@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.controller;
 
-import com.tlongdev.spicio.domain.User;
+import com.tlongdev.spicio.controller.converter.UserConverter;
+import com.tlongdev.spicio.storage.document.UserDocument;
 import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,25 +24,30 @@ public class UserController {
     @Autowired private SequenceDao sequenceDao;
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser(@PathVariable long userId) {
-        User user = userDao.getUser(userId);
+    public ResponseEntity<?> getUser(@PathVariable long userId, @RequestParam(value = "full", defaultValue = "false") String full) {
+        UserDocument user = userDao.getUser(userId);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return ResponseEntity.ok(user);
+
+        if (full.equals("true")) {
+            return ResponseEntity.ok(UserConverter.convertToUserResponseFull(user));
+        } else {
+            return ResponseEntity.ok(UserConverter.convertToUserResponse(user));
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addUser(@RequestBody User user) {
+    public ResponseEntity<?> addUser(@RequestBody UserDocument user) {
         if (user.getFacebookId() != null) {
-            User result = userDao.getUserByFacebookId(user.getFacebookId());
+            UserDocument result = userDao.getUserByFacebookId(user.getFacebookId());
             if (result == null) {
                 user.setId(sequenceDao.nextValue("user"));
                 result = userDao.saveUser(user);
             }
             return mapToResponseEntity(result);
         } else if (user.getGoogleId() != null) {
-            User result = userDao.getUserByGoogleId(user.getGoogleId());
+            UserDocument result = userDao.getUserByGoogleId(user.getGoogleId());
             if (result == null) {
                 user.setId(sequenceDao.nextValue("user"));
                 result = userDao.saveUser(user);
@@ -51,7 +57,7 @@ public class UserController {
         return ResponseEntity.badRequest().body(null);
     }
 
-    private ResponseEntity<?> mapToResponseEntity(User user) {
+    private ResponseEntity<?> mapToResponseEntity(UserDocument user) {
         URI locationUri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(user.getId()).toUri();

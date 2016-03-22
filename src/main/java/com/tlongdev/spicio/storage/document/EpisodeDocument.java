@@ -1,4 +1,4 @@
-package com.tlongdev.spicio.domain;
+package com.tlongdev.spicio.storage.document;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
  * @author Long
  * @since 2016. 03. 19.
  */
-public class Episode {
+public class EpisodeDocument {
 
     @JsonProperty("trakt_id")
     @Id
