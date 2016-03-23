@@ -47,10 +47,9 @@ public class UserController {
             return ResponseEntity.badRequest().body(null);
         }
 
-        List<UserDocument> userDocuments = userDao.fundUsersByName(query);
         List<UserResponse> users = new LinkedList<>();
 
-        for (UserDocument userDoc : userDocuments) {
+        for (UserDocument userDoc : userDao.findUsers(query)) {
             users.add(UserConverter.convertToUserResponse(userDoc));
         }
 
@@ -59,24 +58,22 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@RequestBody UserBody user) {
+        UserDocument result = null;
         if (user.getFacebookId() != null) {
-            UserDocument result = userDao.getUserByFacebookId(user.getFacebookId());
-            if (result == null) {
-                result = UserConverter.convertToUserDocument(user);
-                result.setId(sequenceDao.nextValue("user"));
-                result = userDao.saveUser(result);
-            }
-            return mapToResponseEntity(result);
+            result = userDao.getUserByFacebookId(user.getFacebookId());
         } else if (user.getGoogleId() != null) {
-            UserDocument result = userDao.getUserByGoogleId(user.getGoogleId());
-            if (result == null) {
-                result = UserConverter.convertToUserDocument(user);
-                result.setId(sequenceDao.nextValue("user"));
-                result = userDao.saveUser(result);
-            }
-            return mapToResponseEntity(result);
+            result = userDao.getUserByGoogleId(user.getGoogleId());
+        } else {
+            return ResponseEntity.badRequest().body(null);
         }
-        return ResponseEntity.badRequest().body(null);
+
+        if (result == null) {
+            result = UserConverter.convertToUserDocument(user);
+            result.setId(sequenceDao.nextValue("user"));
+            result.buildSearchTerm();
+            result = userDao.saveUser(result);
+        }
+        return mapToResponseEntity(result);
     }
 
     private ResponseEntity<?> mapToResponseEntity(UserDocument user) {

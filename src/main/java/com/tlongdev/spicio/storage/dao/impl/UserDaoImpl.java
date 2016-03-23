@@ -38,7 +38,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<UserDocument> fundUsersByName(String name) {
-        return userRepository.findByNameIgnoreCase(name);
+    public List<UserDocument> findUsers(String searchTerm) {
+        return userRepository.findBySearchTermLike(searchTerm.toLowerCase());
     }
 }

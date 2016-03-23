@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.storage.document;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -19,9 +20,14 @@ public class UserDocument {
 
     private String email;
 
+    @Indexed
     private String facebookId;
 
+    @Indexed
     private String googleId;
+
+    @Indexed
+    private String searchTerm;
 
     private Set<Long> friends;
 
@@ -91,5 +97,17 @@ public class UserDocument {
 
     public void setHistory(List<ActionDocument> history) {
         this.history = history;
+    }
+
+    public void buildSearchTerm() {
+        if (name == null || email == null) {
+            throw new IllegalStateException("Name and email cannot be null");
+        }
+
+        searchTerm  = name.toLowerCase() + ((char) 30) + email.toLowerCase(); //separate with Record Separator Ascii character
+    }
+
+    public String getSearchTerm() {
+        return searchTerm;
     }
 }

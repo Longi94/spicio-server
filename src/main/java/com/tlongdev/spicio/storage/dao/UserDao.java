@@ -18,5 +18,5 @@ public interface UserDao {
 
     UserDocument getUserByGoogleId(String googleId);
 
-    List<UserDocument> fundUsersByName(String name);
+    List<UserDocument> findUsers(String name);
 }

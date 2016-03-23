@@ -18,5 +18,5 @@ public interface UserRepository extends MongoRepository<UserDocument, Long> {
 
     UserDocument findUserByGoogleId(String googleId);
 
-    List<UserDocument> findByNameIgnoreCase(String name);
+    List<UserDocument> findBySearchTermLike(String searchTerm);
 }
