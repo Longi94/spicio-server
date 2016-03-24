@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.controller.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * @author longi
@@ -8,8 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class UserBody {
 
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String email;
 
     @JsonProperty("facebook_id")

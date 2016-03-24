@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.LinkedList;
 import java.util.List;
@@ -57,29 +58,27 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addUser(@RequestBody UserBody user) {
-        UserDocument result = null;
+    public ResponseEntity<?> addUser(@Valid @RequestBody UserBody user) {
+        if (user.getFacebookId() == null && user.getGoogleId() == null) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        UserDocument result;
         if (user.getFacebookId() != null) {
             result = userDao.getUserByFacebookId(user.getFacebookId());
-        } else if (user.getGoogleId() != null) {
-            result = userDao.getUserByGoogleId(user.getGoogleId());
         } else {
-            return ResponseEntity.badRequest().body(null);
+            result = userDao.getUserByGoogleId(user.getGoogleId());
         }
 
         if (result == null) {
             result = UserConverter.convertToUserDocument(user);
             result.setId(sequenceDao.nextValue("user"));
-            result.buildSearchTerm();
             result = userDao.saveUser(result);
         }
-        return mapToResponseEntity(result);
-    }
 
-    private ResponseEntity<?> mapToResponseEntity(UserDocument user) {
         URI locationUri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(user.getId()).toUri();
+                .buildAndExpand(result.getId()).toUri();
         return ResponseEntity.created(locationUri).body(null);
     }
 }
