@@ -58,6 +58,7 @@ public class UserController {
         if (result == null) {
             result = UserConverter.convertToUserDocument(user);
             result.setId(sequenceDao.nextValue("user"));
+            result.buildSearchTerm();
             result = userDao.saveUser(result);
         }
 
