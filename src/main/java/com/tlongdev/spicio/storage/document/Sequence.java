@@ -12,7 +12,7 @@ public class Sequence {
 
     @Id private String name;
 
-    private int value;
+    private Long value;
 
     public String getName() {
         return name;
@@ -22,15 +22,15 @@ public class Sequence {
         this.name = name;
     }
 
-    public int getValue() {
+    public Long getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(Long value) {
         this.value = value;
     }
 
-    public int nextValue() {
+    public Long nextValue() {
         return ++value;
     }
 }

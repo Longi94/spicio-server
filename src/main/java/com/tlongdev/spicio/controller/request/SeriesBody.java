@@ -1,42 +1,51 @@
-package com.tlongdev.spicio.storage.document;
+package com.tlongdev.spicio.controller.request;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * @author Long
- * @since 2016. 03. 19.
+ * @author longi
+ * @since 2016.03.24.
  */
-@Document(collection = "series")
-public class SeriesDocument {
+public class SeriesBody {
 
     private String title;
 
     private Integer year;
 
-    @Id
+    @NotNull
+    @JsonProperty("trakt_id")
     private Integer traktId;
 
+    @JsonProperty("slug")
     private String slugName;
 
+    @JsonProperty("tvdb_id")
     private Integer tvdbId;
 
+    @JsonProperty("imdb_id")
     private String imdbId;
 
+    @JsonProperty("tmdb_id")
     private Integer tmdbId;
 
+    @JsonProperty("tv_rage_id")
     private Integer tvRageId;
 
     private String overview;
 
+    @JsonProperty("first_aired")
     private Long firstAired;
 
+    @JsonProperty("day_of_airing")
     private Integer dayOfAiring;
 
+    @JsonProperty("time_of_airing")
     private String timeOfAiring;
 
+    @JsonProperty("air_time_zone")
     private String airTimeZone;
 
     private Integer runtime;
@@ -49,19 +58,21 @@ public class SeriesDocument {
 
     private Integer status;
 
+    @JsonProperty("trakt_rating")
     private Double traktRating;
 
+    @JsonProperty("trakt_rating_count")
     private Integer traktRatingCount;
 
     private List<String> genres;
 
+    @JsonProperty("poster_full")
     private String posterFull;
 
+    @JsonProperty("poster_thumb")
     private String posterThumb;
 
     private String thumb;
-
-    private List<EpisodeDocument> episodes;
 
     public String getTitle() {
         return title;

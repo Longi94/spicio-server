@@ -16,16 +16,16 @@ public class SequenceDaoImpl implements SequenceDao {
     @Autowired private SequenceRepository repository;
 
     @Override
-    public int nextValue(String name) {
+    public Long nextValue(String name) {
         Sequence sequence = repository.findSequenceByName(name);
 
         if (sequence == null) {
             sequence = new Sequence();
             sequence.setName(name);
-            sequence.setValue(-1);
+            sequence.setValue(0L);
         }
 
-        int value = sequence.nextValue();
+        Long value = sequence.nextValue();
 
         repository.save(sequence);
 

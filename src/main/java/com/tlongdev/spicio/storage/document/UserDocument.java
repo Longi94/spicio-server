@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @Document(collection = "users")
 public class UserDocument {
 
-    @Id private long id;
+    @Id private Long id;
 
     private String name;
 
@@ -35,11 +36,11 @@ public class UserDocument {
 
     private List<ActionDocument> history;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -109,5 +110,12 @@ public class UserDocument {
 
     public String getSearchTerm() {
         return searchTerm;
+    }
+
+    public void addSeries(int traktId) {
+        if (series == null) {
+            series = new HashSet<>();
+        }
+        series.add(traktId);
     }
 }

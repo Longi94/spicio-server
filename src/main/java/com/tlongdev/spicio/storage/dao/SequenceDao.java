@@ -6,5 +6,5 @@ package com.tlongdev.spicio.storage.dao;
  */
 public interface SequenceDao {
 
-    int nextValue(String id);
+    Long nextValue(String id);
 }

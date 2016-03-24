@@ -83,7 +83,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteUser(@PathVariable("userId") long userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable long userId) {
         if (userDao.deleteAllUserData(userId)) {
             return ResponseEntity.ok(null);
         } else {
