@@ -19,4 +19,6 @@ public interface UserDao {
     UserDocument getUserByGoogleId(String googleId);
 
     List<UserDocument> findUsers(String name);
+
+    boolean deleteAllUserData(long userId);
 }

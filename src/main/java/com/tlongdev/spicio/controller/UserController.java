@@ -7,7 +7,6 @@ import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.dao.UserDao;
 import com.tlongdev.spicio.storage.document.UserDocument;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,20 +26,6 @@ public class UserController {
 
     @Autowired private UserDao userDao;
     @Autowired private SequenceDao sequenceDao;
-
-    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
-    public ResponseEntity<?> getUser(@PathVariable long userId, @RequestParam(value = "full", defaultValue = "false") String full) {
-        UserDocument user = userDao.getUser(userId);
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
-
-        if (full.equals("true")) {
-            return ResponseEntity.ok(UserConverter.convertToUserResponseFull(user));
-        } else {
-            return ResponseEntity.ok(UserConverter.convertToUserResponse(user));
-        }
-    }
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserResponse>> searchUser(@RequestParam("query") String query) {
@@ -80,5 +65,28 @@ public class UserController {
                 .fromCurrentRequest().path("/{id}")
                 .buildAndExpand(result.getId()).toUri();
         return ResponseEntity.created(locationUri).body(null);
+    }
+
+    @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
+    public ResponseEntity<?> getUser(@PathVariable long userId, @RequestParam(value = "full", defaultValue = "false") String full) {
+        UserDocument user = userDao.getUser(userId);
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        if (full.equals("true")) {
+            return ResponseEntity.ok(UserConverter.convertToUserResponseFull(user));
+        } else {
+            return ResponseEntity.ok(UserConverter.convertToUserResponse(user));
+        }
+    }
+
+    @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteUser(@PathVariable("userId") long userId) {
+        if (userDao.deleteAllUserData(userId)) {
+            return ResponseEntity.ok(null);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

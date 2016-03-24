@@ -41,4 +41,11 @@ public class UserDaoImpl implements UserDao {
     public List<UserDocument> findUsers(String searchTerm) {
         return userRepository.findBySearchTermLike(searchTerm.toLowerCase());
     }
+
+    @Override
+    public boolean deleteAllUserData(long userId) {
+        // TODO: 2016.03.24. delete all documents related to user, check if user exists?
+        userRepository.delete(userId);
+        return true;
+    }
 }
