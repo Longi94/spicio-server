@@ -35,4 +35,17 @@ public class SeriesDaoImpl implements SeriesDao {
         SeriesDocument document = convertToSeriesDocument(series);
         return seriesRepository.save(document);
     }
+
+    @Override
+    public boolean removeSeries(long userId, int seriesId) {
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            return false;
+        }
+
+        boolean removed = user.getSeries().remove(seriesId);
+        userRepository.save(user);
+        return removed;
+    }
 }

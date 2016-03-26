@@ -9,4 +9,6 @@ import com.tlongdev.spicio.storage.document.SeriesDocument;
  */
 public interface SeriesDao {
     SeriesDocument addSeries(long userId, SeriesBody series);
+
+    boolean removeSeries(long userId, int seriesId);
 }

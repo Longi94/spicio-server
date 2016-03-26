@@ -29,4 +29,13 @@ public class SeriesController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @RequestMapping(value = "/{seriesId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteSeries(@PathVariable long userId, @PathVariable int seriesId) {
+        if (seriesDao.removeSeries(userId, seriesId)) {
+            return ResponseEntity.ok(null);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
