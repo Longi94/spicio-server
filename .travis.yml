@@ -1,14 +1,17 @@
 language: java
 
+services:
+  - mongodb
+
 jdk:
-  - oraclejdk8
+  - oraclejdk7
 
 before_install:
   - chmod +x gradlew
   - pip install --user codecov
 
 script:
-  - ./gradlew check --stacktrace
+  - ./gradlew build --stacktrace
 
 after_success:
   - codecov

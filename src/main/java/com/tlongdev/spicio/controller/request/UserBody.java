@@ -1,34 +1,25 @@
-package com.tlongdev.spicio.user;
+package com.tlongdev.spicio.controller.request;
 
-import org.springframework.data.annotation.Id;
-
-import java.util.Set;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
- * @author Long
- * @since 2016. 03. 15.
+ * @author longi
+ * @since 2016.03.22.
  */
-public class User {
+public class UserBody {
 
-    @Id private long id;
-
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String email;
 
+    @JsonProperty("facebook_id")
     private String facebookId;
 
+    @JsonProperty("google_id")
     private String googleId;
-
-    private Set<Long> friends;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -60,13 +51,5 @@ public class User {
 
     public void setGoogleId(String googleId) {
         this.googleId = googleId;
-    }
-
-    public Set<Long> getFriends() {
-        return friends;
-    }
-
-    public void setFriends(Set<Long> friends) {
-        this.friends = friends;
     }
 }
