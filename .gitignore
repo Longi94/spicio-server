@@ -34,3 +34,6 @@ $RECYCLE.BIN/
 *.iml
 .idea/
 /out/
+
+#App proterties, so it doesn't conflict with the deployed server
+/src/main/resources/application.properties
