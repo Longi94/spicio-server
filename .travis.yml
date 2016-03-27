@@ -8,7 +8,7 @@ before_install:
   - pip install --user codecov
 
 script:
-  - ./gradlew check --stacktrace
+  - ./gradlew build --stacktrace
 
 after_success:
   - codecov
