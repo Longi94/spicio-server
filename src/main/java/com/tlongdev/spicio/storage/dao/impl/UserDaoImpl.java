@@ -38,9 +38,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public long addUser(UserDocument user) {
-
-        UserDocument result;
-        result = userRepository.findUserByEmail(user.getEmail());
+        UserDocument result = userRepository.findUserByEmail(user.getEmail());
 
         if (result == null) {
             result = user;
@@ -54,6 +52,7 @@ public class UserDaoImpl implements UserDao {
             if (result.getGoogleId() == null) {
                 result.setGoogleId(user.getGoogleId());
             }
+            result = userRepository.save(result);
         }
 
         return result.getId();
