@@ -12,13 +12,9 @@ public interface UserDao {
 
     UserDocument getUser(long userId);
 
-    UserDocument saveUser(UserDocument user);
-
-    UserDocument getUserByFacebookId(String facebookId);
-
-    UserDocument getUserByGoogleId(String googleId);
-
     List<UserDocument> findUsers(String name);
 
     boolean deleteAllUserData(long userId);
+
+    long addUser(UserDocument userDocument);
 }
