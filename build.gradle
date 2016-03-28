@@ -33,7 +33,7 @@ repositories {
     mavenCentral()
 }
 
-
+ext['tomcat.version'] = '7.0.59'
 dependencies {
     compile('org.springframework.boot:spring-boot-starter-data-mongodb')
     compile('org.springframework.boot:spring-boot-starter-web')
