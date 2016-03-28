@@ -44,27 +44,16 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> addUser(@Valid @RequestBody UserBody user) {
+        //At least one of them shouldn't be null
         if (user.getFacebookId() == null && user.getGoogleId() == null) {
             return ResponseEntity.badRequest().body(null);
         }
 
-        UserDocument result;
-        if (user.getFacebookId() != null) {
-            result = userDao.getUserByFacebookId(user.getFacebookId());
-        } else {
-            result = userDao.getUserByGoogleId(user.getGoogleId());
-        }
-
-        if (result == null) {
-            result = UserConverter.convertToUserDocument(user);
-            result.setId(sequenceDao.nextValue("user"));
-            result.buildSearchTerm();
-            result = userDao.saveUser(result);
-        }
+        long id = userDao.addUser(UserConverter.convertToUserDocument(user));
 
         URI locationUri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(result.getId()).toUri();
+                .buildAndExpand(id).toUri();
         return ResponseEntity.created(locationUri).body(null);
     }
 
