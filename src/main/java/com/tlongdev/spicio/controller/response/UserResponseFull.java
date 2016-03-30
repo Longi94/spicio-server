@@ -27,7 +27,7 @@ public class UserResponseFull {
     // TODO: 2016.03.22. needs a better response structure
     private Set<Long> friends;
 
-    private Set<Integer> series;
+    private List<SeriesResponse> series;
 
     private List<ActionDocument> history;
 
@@ -79,11 +79,11 @@ public class UserResponseFull {
         this.friends = friends;
     }
 
-    public Set<Integer> getSeries() {
+    public List<SeriesResponse> getSeries() {
         return series;
     }
 
-    public void setSeries(Set<Integer> series) {
+    public void setSeries(List<SeriesResponse> series) {
         this.series = series;
     }
 

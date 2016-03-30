@@ -8,7 +8,7 @@ info:
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: tlongdev.com
+host: spicio-tlongdev.rhcloud.com
 basePath: /api/v1
 produces:
   - application/json
@@ -36,7 +36,21 @@ paths:
           schema:
             type: array
             items:
-              $ref: "#/definitions/User"
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int64
+                  description: "Unique identifier of the user."
+                  example: 0
+                name:
+                  type: string
+                  description: "The name of the user."
+                  example: "John Doe"
+                email:
+                  type: string
+                  description: "The email address of the user."
+                  example: "john@doe.com"
         400:
           description: "Missing search criteria parameter"
     post:
@@ -72,10 +86,11 @@ paths:
       responses:
         200:
           description: |
-            Successful registration. This method will return the registered
-            `User` so the client may store the ID of the user.
-          schema:
-            $ref: "#/definitions/User"
+            Successful registration.
+          headers:
+            Location:
+              description: "The location URI of the user."
+              type: string
         400:
           description: "Bad request body"
 
@@ -108,28 +123,47 @@ paths:
           schema:
             type: object
             properties:
-              user:
-                $ref: "#/definitions/User"
+              id:
+                type: integer
+                format: int64
+                description: "Unique identifier of the user."
+                example: 0
+              name:
+                type: string
+                description: "The name of the user."
+                example: "John Doe"
+              email:
+                type: string
+                description: "The email address of the user."
+                example: "john@doe.com"
+              facebook_id:
+                type: string
+                description: "The Facebook ID of the user if known."
+                example: "123456789"
+              google_id:
+                type: string
+                description: "The Google+ ID of the user if known."
+                example: "123456789"
               series:
                 type: array
                 items:
                   $ref: "#/definitions/Series"
-              episodes:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    trakt_id:
-                      type: integer
-                      format: int64
-                      description: "Trakt ID of the episode"
-                    watched:
-                      type: integer
-                      format: int32
-                      description: "0 if not watched, 1 if watched, 2 if skipped"
-                    liked:
-                      type: boolean
-                      description: "Wether the user liked the episode"
+#              episodes:
+#                type: array
+#                items:
+#                  type: object
+#                  properties:
+#                    trakt_id:
+#                      type: integer
+#                      format: int64
+#                      description: "Trakt ID of the episode"
+#                    watched:
+#                      type: integer
+#                      format: int32
+#                      description: "0 if not watched, 1 if watched, 2 if skipped"
+#                    liked:
+#                      type: boolean
+#                      description: "Wether the user liked the episode"
         400:
           description: "Invalid IDs supplied"
         404:
@@ -435,6 +469,8 @@ paths:
           description: "Invalid IDs supplied"
         404:
           description: "User not found"
+
+  /users/{id}/series/{series_id}:
     delete:
       tags:
         - user
@@ -451,7 +487,7 @@ paths:
           type: number
           format: int64
         - name: series_id
-          in: formData
+          in: path
           description: "The series to add to he user."
           required: true
           type: number

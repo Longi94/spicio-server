@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.converter;
 
 import com.tlongdev.spicio.controller.request.SeriesBody;
+import com.tlongdev.spicio.controller.response.SeriesResponse;
 import com.tlongdev.spicio.storage.document.SeriesDocument;
 
 /**
@@ -35,5 +36,35 @@ public class SeriesConverter {
         document.setTvRageId(seriesBody.getTvRageId());
         document.setYear(seriesBody.getYear());
         return document;
+    }
+
+    public static SeriesResponse convertToSeriesResponse(SeriesDocument seriesDocument) {
+        SeriesResponse response = new SeriesResponse();
+        response.setAirTimeZone(seriesDocument.getAirTimeZone());
+        response.setCertification(seriesDocument.getCertification());
+        response.setDayOfAiring(seriesDocument.getDayOfAiring());
+        response.setFirstAired(seriesDocument.getFirstAired());
+        response.setGenres(seriesDocument.getGenres());
+        response.setImdbId(seriesDocument.getImdbId());
+        response.setNetwork(seriesDocument.getNetwork());
+        response.setOverview(seriesDocument.getOverview());
+        response.setPosterFull(seriesDocument.getPosterFull());
+        response.setPosterThumb(seriesDocument.getPosterThumb());
+        response.setRuntime(seriesDocument.getRuntime());
+        response.setSlugName(seriesDocument.getSlugName());
+        response.setStatus(seriesDocument.getStatus());
+        response.setThumb(seriesDocument.getThumb());
+        response.setTimeOfAiring(seriesDocument.getTimeOfAiring());
+        response.setTitle(seriesDocument.getTitle());
+        response.setTmdbId(seriesDocument.getTmdbId());
+        response.setTrailer(seriesDocument.getTrailer());
+        response.setTraktId(seriesDocument.getTraktId());
+        response.setTraktRating(seriesDocument.getTraktRating());
+        response.setTraktRatingCount(seriesDocument.getTraktRatingCount());
+        response.setTvdbId(seriesDocument.getTvdbId());
+        response.setTvRageId(seriesDocument.getTvRageId());
+        response.setYear(seriesDocument.getYear());
+        return response;
+
     }
 }
