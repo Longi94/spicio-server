@@ -77,7 +77,7 @@ public class UserDaoImpl implements UserDao {
             result = userDoc;
             result.setId(sequenceDao.nextValue("user"));
             result.buildSearchTerm();
-            result = userRepository.save(result);
+            result = userRepository.insert(result);
         } else {
             //User already exists, update ids
             if (result.getFacebookId() == null) {

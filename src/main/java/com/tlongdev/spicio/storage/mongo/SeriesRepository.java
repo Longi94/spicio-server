@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SeriesRepository extends MongoRepository<SeriesDocument, Integer> {
+    SeriesDocument findSeriesByTraktId(Integer traktId);
 }

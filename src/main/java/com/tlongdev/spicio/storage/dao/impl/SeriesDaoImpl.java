@@ -35,9 +35,17 @@ public class SeriesDaoImpl implements SeriesDao {
         user.addSeries(series.getTraktId());
         userRepository.save(user);
 
+        //Check if series already exists
+        SeriesDocument seriesDoc = seriesRepository.findSeriesByTraktId(series.getTraktId());
+
         //Save the series to the database
-        SeriesDocument document = convertToSeriesDocument(series);
-        return seriesRepository.save(document);
+        SeriesDocument newSeries = convertToSeriesDocument(series);
+        if (seriesDoc == null) {
+            return seriesRepository.insert(newSeries);
+        } else {
+            newSeries.setTraktId(seriesDoc.getTraktId());
+            return seriesRepository.save(newSeries);
+        }
     }
 
     @Override
