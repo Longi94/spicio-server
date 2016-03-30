@@ -23,29 +23,39 @@ public class SeriesDaoImpl implements SeriesDao {
 
     @Override
     public SeriesDocument addSeries(long userId, SeriesBody series) {
+        //Find the user
         UserDocument user = userRepository.findUserById(userId);
 
         if (user == null) {
+            //User doesn't exist
             return null;
         }
 
+        //Add the series to the user
         user.addSeries(series.getTraktId());
         userRepository.save(user);
 
+        //Save the series to the database
         SeriesDocument document = convertToSeriesDocument(series);
         return seriesRepository.save(document);
     }
 
     @Override
     public boolean removeSeries(long userId, int seriesId) {
+        //Find the user
         UserDocument user = userRepository.findUserById(userId);
 
         if (user == null) {
+            //User doesn't exist
             return false;
         }
 
+        //Remove the series from the user
         boolean removed = user.getSeries().remove(seriesId);
+
+        //Update the user
         userRepository.save(user);
+
         return removed;
     }
 }

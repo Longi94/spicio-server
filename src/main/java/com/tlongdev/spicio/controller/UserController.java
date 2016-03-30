@@ -2,10 +2,8 @@ package com.tlongdev.spicio.controller;
 
 import com.tlongdev.spicio.controller.request.UserBody;
 import com.tlongdev.spicio.controller.response.UserResponse;
-import com.tlongdev.spicio.converter.UserConverter;
-import com.tlongdev.spicio.storage.dao.SequenceDao;
+import com.tlongdev.spicio.controller.response.UserResponseFull;
 import com.tlongdev.spicio.storage.dao.UserDao;
-import com.tlongdev.spicio.storage.document.UserDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +11,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -25,7 +22,6 @@ import java.util.List;
 public class UserController {
 
     @Autowired private UserDao userDao;
-    @Autowired private SequenceDao sequenceDao;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<UserResponse>> searchUser(@RequestParam("query") String query) {
@@ -33,13 +29,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(null);
         }
 
-        List<UserResponse> users = new LinkedList<>();
-
-        for (UserDocument userDoc : userDao.findUsers(query)) {
-            users.add(UserConverter.convertToUserResponse(userDoc));
-        }
-
-        return ResponseEntity.ok(users);
+        return ResponseEntity.ok(userDao.findUsers(query));
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -49,7 +39,7 @@ public class UserController {
             return ResponseEntity.badRequest().body(null);
         }
 
-        long id = userDao.addUser(UserConverter.convertToUserDocument(user));
+        long id = userDao.addUser(user);
 
         URI locationUri = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{id}")
@@ -59,15 +49,18 @@ public class UserController {
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.GET)
     public ResponseEntity<?> getUser(@PathVariable long userId, @RequestParam(value = "full", defaultValue = "false") String full) {
-        UserDocument user = userDao.getUser(userId);
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
         if (full.equals("true")) {
-            return ResponseEntity.ok(UserConverter.convertToUserResponseFull(user));
+            UserResponseFull user = userDao.getUserFull(userId);
+            if (user == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(user);
         } else {
-            return ResponseEntity.ok(UserConverter.convertToUserResponse(user));
+            UserResponse user = userDao.getUser(userId);
+            if (user == null) {
+                return ResponseEntity.notFound().build();
+            }
+            return ResponseEntity.ok(user);
         }
     }
 

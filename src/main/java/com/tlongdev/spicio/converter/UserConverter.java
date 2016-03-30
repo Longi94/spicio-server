@@ -28,7 +28,6 @@ public class UserConverter {
         userResponse.setGoogleId(user.getGoogleId());
         userResponse.setFriends(user.getFriends());
         userResponse.setHistory(user.getHistory());
-        userResponse.setSeries(user.getSeries());
         return userResponse;
     }
 
