@@ -1,0 +1,1631 @@
+<?xml version="1.0"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8"/>
+    <title>Spicio API</title>
+    <link rel="stylesheet" href="css/swagger.css" type="text/css"/>
+</head>
+<body>
+<h1>Spicio API</h1>
+<div class="app-desc">Spicio Server API</div>
+
+<div class="app-desc">Contact Info: <a href="hello@helloreverb.com">dev@tlongdev.com</a></div>
+<div class="app-desc">Version: 1.0.0</div>
+<div class="license-info">Apache 2.0</div>
+<div class="license-url">http://www.apache.org/licenses/LICENSE-2.0.html</div>
+<h2>Access</h2>
+
+
+<h2><a name="__Methods">Methods</a></h2>
+[ Jump to <a href="#__Models">Models</a> ]
+
+
+<h2>Table of Contents </h2>
+<div class="method-summary"></div>
+
+<ol>
+
+
+
+    <li><a href="#usersGet"><code><span class="http-method">get</span> /users</code></a></li>
+
+    <li><a href="#usersPost"><code><span class="http-method">post</span> /users</code></a></li>
+
+    <li><a href="#usersIdGet"><code><span class="http-method">get</span> /users/{id}</code></a></li>
+
+    <li><a href="#usersIdDelete"><code><span class="http-method">delete</span> /users/{id}</code></a></li>
+
+    <li><a href="#usersIdDiscoverGet"><code><span class="http-method">get</span> /users/{id}/discover</code></a></li>
+
+    <li><a href="#usersIdDiscoverPost"><code><span class="http-method">post</span> /users/{id}/discover</code></a></li>
+
+    <li><a href="#usersIdFeedGet"><code><span class="http-method">get</span> /users/{id}/feed</code></a></li>
+
+    <li><a href="#usersIdFriendsGet"><code><span class="http-method">get</span> /users/{id}/friends</code></a></li>
+
+    <li><a href="#usersIdFriendsPost"><code><span class="http-method">post</span> /users/{id}/friends</code></a></li>
+
+    <li><a href="#usersIdFriendsDelete"><code><span class="http-method">delete</span> /users/{id}/friends</code></a></li>
+
+    <li><a href="#usersIdHistoryGet"><code><span class="http-method">get</span> /users/{id}/history</code></a></li>
+
+    <li><a href="#usersIdSeriesGet"><code><span class="http-method">get</span> /users/{id}/series</code></a></li>
+
+    <li><a href="#usersIdSeriesPost"><code><span class="http-method">post</span> /users/{id}/series</code></a></li>
+
+    <li><a href="#usersIdSeriesSeriesIdDelete"><code><span class="http-method">delete</span> /users/{id}/series/{series_id}</code></a></li>
+
+    <li><a href="#usersIdSeriesSeriesIdEpisodesGet"><code><span class="http-method">get</span> /users/{id}/series/{series_id}/episodes</code></a></li>
+
+    <li><a href="#usersIdSeriesSeriesIdEpisodesPost"><code><span class="http-method">post</span> /users/{id}/series/{series_id}/episodes</code></a></li>
+
+    <li><a href="#usersIdSeriesSeriesIdEpisodesEpisodeIdPut"><code><span class="http-method">put</span> /users/{id}/series/{series_id}/episodes/{episode_id}</code></a></li>
+
+    <li><a href="#usersIdSeriesSeriesIdEpisodesEpisodeIdDelete"><code><span class="http-method">delete</span> /users/{id}/series/{series_id}/episodes/{episode_id}</code></a></li>
+
+
+
+</ol>
+
+
+
+
+
+
+<div class="method"><a name="usersGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users</code></pre></div>
+    <div class="method-summary">Search for user (<span class="nickname">usersGet</span>)</div>
+
+    <div class="method-notes">Search for a `User` by their name and/or their e-mail address.</div>
+
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+        <div class="param">query (required)</div>
+
+        <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; The text to search against. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        array[<a href="#inline_response_200">inline_response_200</a>]
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    A list of `User` objacts matching the search criteria.
+
+
+    <h4 class="field-label">400</h4>
+    Missing search criteria parameter
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersPost"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="post"><code class="huge"><span class="http-method">post</span> /users</code></pre></div>
+    <div class="method-summary">Register/authenticate user (<span class="nickname">usersPost</span>)</div>
+
+    <div class="method-notes">Register a new user to the database. At least one of the ID fields must\nbe present in the body. For now this method returns a successful\nregistration response if the user already exists. (It might be a better\npractice to give the user the option to link their facebook and google\naccount)</div>
+
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+        <div class="param">user (required)</div>
+
+        <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; The display name of the user. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Successful registration.
+
+
+    <h4 class="field-label">400</h4>
+    Bad request body
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{id}</code></pre></div>
+    <div class="method-summary">Get user (<span class="nickname">usersIdGet</span>)</div>
+
+    <div class="method-notes">Find a user with the given ID. The `full` parameter should only be set\nto true when the user logs in to query and cache the data and should not\nbe set to true if the client us querying other user&#39;s data.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+        <div class="param">full (optional)</div>
+
+        <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; If set to true, the method will return all the data the database has\nabout the user </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        <a href="#inline_response_200_1">inline_response_200_1</a>
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Returns the `User` object with the ID if it exists.
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdDelete"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/{id}</code></pre></div>
+    <div class="method-summary">Delete user (<span class="nickname">usersIdDelete</span>)</div>
+
+    <div class="method-notes">Delete a user and all it&#39;s data from the database. This includes all the\nseries and watched episodes.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Successfully deleted all data
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdDiscoverGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{id}/discover</code></pre></div>
+    <div class="method-summary">Get recommendations for user (<span class="nickname">usersIdDiscoverGet</span>)</div>
+
+    <div class="method-notes">Get a list of recommended series for the user to watch. The curated list\nis created by the server with some voodoo black magic.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        array[<a href="#Series">Series</a>]
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    A list of `Series` objects.
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdDiscoverPost"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="post"><code class="huge"><span class="http-method">post</span> /users/{id}/discover</code></pre></div>
+    <div class="method-summary">Mark show as &#39;not interested&#39; (<span class="nickname">usersIdDiscoverPost</span>)</div>
+
+    <div class="method-notes">Call this method if the user is not interested in a show, so that it\nwon&#39;t be suggested to the user again in the future. This is time based\nmeaning the engine might select the show again in the future. The\nback-off time is reasing exponentially with the number of &#39;not\ninterested&#39; request.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+        <div class="param">seriesId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; trakt ID of the series </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Show succesfully marked as not interested
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User or series not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdFeedGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{id}/feed</code></pre></div>
+    <div class="method-summary">Get user&#39;s feed (<span class="nickname">usersIdFeedGet</span>)</div>
+
+    <div class="method-notes">Get the news feed items of the user with the given ID. This is based on\nthe activity of the user and the user&#39;s friends\&quot; activity. As this\nmethod can return a lot of data, pagination is mandatory.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+        <div class="param">offset (required)</div>
+
+        <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Pagination offset </div><div class="param">limit (required)</div>
+
+        <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Pagination limit </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        array[<a href="#Action">Action</a>]
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    A list of `Action` objects that represent the news feed of the user.
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied or missing parameters
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdFriendsGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{id}/friends</code></pre></div>
+    <div class="method-summary">Get users friends (<span class="nickname">usersIdFriendsGet</span>)</div>
+
+    <div class="method-notes">Get a detailed list of friends of the user with the given ID.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        array[<a href="#User">User</a>]
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    A list of `User` objects which are the friends of the user.
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdFriendsPost"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="post"><code class="huge"><span class="http-method">post</span> /users/{id}/friends</code></pre></div>
+    <div class="method-summary">Add friend to user (<span class="nickname">usersIdFriendsPost</span>)</div>
+
+    <div class="method-notes">Add another user as a friend to the user with the given id. The current\nuser will also be added to the other user&#39;s friends list.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+        <div class="param">friendId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; ID of the friend to add </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        <a href="#User">User</a>
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    User successfully added to the friends list. Returns the details of\nthe friend.
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdFriendsDelete"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/{id}/friends</code></pre></div>
+    <div class="method-summary">Delete friend (<span class="nickname">usersIdFriendsDelete</span>)</div>
+
+    <div class="method-notes">Remove a user from the user&#39;s friend list. The user will also be removed\nfrom the friend&#39;s friendlist.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+        <div class="param">friendId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; ID of the friend to add </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    OK
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdHistoryGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{id}/history</code></pre></div>
+    <div class="method-summary">Get users history (<span class="nickname">usersIdHistoryGet</span>)</div>
+
+    <div class="method-notes">Get the history if the user with the given id. It will return the\nactivity of the user in chronological order. As this  method can return\na lot of data, pagination is mandatory.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+    <h3 class="field-label">Query parameters</h3>
+    <div class="field-items">
+        <div class="param">offset (required)</div>
+
+        <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Pagination offset </div><div class="param">limit (required)</div>
+
+        <div class="param-desc"><span class="param-type">Query Parameter</span> &mdash; Pagination limit </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        array[<a href="#Action">Action</a>]
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    A list of `Action` objects that represent the history of the user.
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdSeriesGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{id}/series</code></pre></div>
+    <div class="method-summary">Get saved series (<span class="nickname">usersIdSeriesGet</span>)</div>
+
+    <div class="method-notes">Returns a list of series the user has added.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        array[<a href="#Series">Series</a>]
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    OK
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdSeriesPost"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="post"><code class="huge"><span class="http-method">post</span> /users/{id}/series</code></pre></div>
+    <div class="method-summary">Add series (<span class="nickname">usersIdSeriesPost</span>)</div>
+
+    <div class="method-notes">Save series to the user. Details of the series is needed, since if the\nseries doesn&#39;t exist in that database yet, it will be insterted.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+    <h3 class="field-label">Request body</h3>
+    <div class="field-items">
+        <div class="param">series (required)</div>
+
+        <div class="param-desc"><span class="param-type">Body Parameter</span> &mdash; The series to add to he user </div>
+    </div>  <!-- field-items -->
+
+
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    The series was successfully added
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdSeriesSeriesIdDelete"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/{id}/series/{series_id}</code></pre></div>
+    <div class="method-summary">Remove series (<span class="nickname">usersIdSeriesSeriesIdDelete</span>)</div>
+
+    <div class="method-notes">Delete a series from the user&#39;s saved series. This will not delete the\nseries record itself, only the relation between the series and the user.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div><div class="param">seriesId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The series to add to he user. </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Series successfully deleted
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdSeriesSeriesIdEpisodesGet"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="get"><code class="huge"><span class="http-method">get</span> /users/{id}/series/{series_id}/episodes</code></pre></div>
+    <div class="method-summary">Get user&#39;s episodes (<span class="nickname">usersIdSeriesSeriesIdEpisodesGet</span>)</div>
+
+    <div class="method-notes">Returns the IDs of the watched, liked and skipped episodes of the user\nand the given series.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div><div class="param">seriesId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The series to add to he user </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Return type</h3>
+    <div class="return-type">
+        <a href="#inline_response_200_2">inline_response_200_2</a>
+
+    </div>
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    OK
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User or series not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdSeriesSeriesIdEpisodesPost"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="post"><code class="huge"><span class="http-method">post</span> /users/{id}/series/{series_id}/episodes</code></pre></div>
+    <div class="method-summary">Add episode (<span class="nickname">usersIdSeriesSeriesIdEpisodesPost</span>)</div>
+
+    <div class="method-notes">Add an episode to the users wacthed/liked/skipped lists.</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div><div class="param">seriesId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The ID of the series </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+    <h3 class="field-label">Form parameters</h3>
+    <div class="field-items">
+        <div class="param">episode (required)</div>
+
+        <div class="param-desc"><span class="param-type">Form Parameter</span> &mdash; The trakt ID of the episode. </div>
+    </div>  <!-- field-items -->
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Successfully added episode
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User or series not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdSeriesSeriesIdEpisodesEpisodeIdPut"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="put"><code class="huge"><span class="http-method">put</span> /users/{id}/series/{series_id}/episodes/{episode_id}</code></pre></div>
+    <div class="method-summary">Update status of episode (<span class="nickname">usersIdSeriesSeriesIdEpisodesEpisodeIdPut</span>)</div>
+
+    <div class="method-notes">Update the watched/liked/skipped status of a episode. Should be called\nwhen the client is sure that the record exists and if the change doesn&#39;t\nset all the attributes to false (when the record should be deleted)</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div><div class="param">seriesId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The ID of the series </div><div class="param">episodeId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The ID of the episode </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Successfully updated
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User, series or episode not found
+
+
+</div> <!-- method -->
+<hr/>
+
+<div class="method"><a name="usersIdSeriesSeriesIdEpisodesEpisodeIdDelete"/>
+    <div class="method-path">
+        <a class="up" href="#__Methods">Up</a>
+        <pre class="delete"><code class="huge"><span class="http-method">delete</span> /users/{id}/series/{series_id}/episodes/{episode_id}</code></pre></div>
+    <div class="method-summary">Delete episode fomr user&#39;s database (<span class="nickname">usersIdSeriesSeriesIdEpisodesEpisodeIdDelete</span>)</div>
+
+    <div class="method-notes">Delete an episode record from the user&#39;s database. Should be called\nwhen the status of the episode is set to \&quot;not watched&#39;, \&quot;not liked\&quot; and\n\&quot;not skipped\&quot;</div>
+
+
+    <h3 class="field-label">Path parameters</h3>
+    <div class="field-items">
+        <div class="param">id (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; ID of the user </div><div class="param">seriesId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The ID of the series </div><div class="param">episodeId (required)</div>
+
+        <div class="param-desc"><span class="param-type">Path Parameter</span> &mdash; The ID of the episode </div>
+    </div>  <!-- field-items -->
+
+
+
+    <h3 class="field-label">Consumes</h3>
+    This API call consumes the following media types via the <span class="heaader">Content-Type</span> request header:
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--Todo: process Response Object and its headers, schema, examples -->
+
+
+
+
+    <h3 class="field-label">Produces</h3>
+    This API call produces the following media types according to the <span class="header">Accept</span> request header;
+    the media type will be conveyed by the <span class="heaader">Content-Type</span> response header.
+    <ul>
+
+        <li><code>application/json</code></li>
+
+    </ul>
+
+
+    <h3 class="field-label">Responses</h3>
+
+    <h4 class="field-label">200</h4>
+    Successfully deleted
+
+
+    <h4 class="field-label">400</h4>
+    Invalid IDs supplied
+
+
+    <h4 class="field-label">404</h4>
+    User, series or episode not found
+
+
+</div> <!-- method -->
+<hr/>
+
+
+
+
+
+<div class="up"><a href="#__Models">Up</a></div>
+<h2><a name="__Models">Models</a></h2>
+[ Jump to <a href="#__Methods">Methods</a> ]
+
+<h2>Table of Contents</h2>
+<ol>
+
+
+    <li><a href="#User"><code>User</code></a></li>
+
+
+
+    <li><a href="#Action"><code>Action</code></a></li>
+
+
+
+    <li><a href="#Series"><code>Series</code></a></li>
+
+
+
+    <li><a href="#Episode"><code>Episode</code></a></li>
+
+
+
+    <li><a href="#Inline_response_200"><code>Inline_response_200</code></a></li>
+
+
+
+    <li><a href="#User"><code>User</code></a></li>
+
+
+
+    <li><a href="#Inline_response_200_1"><code>Inline_response_200_1</code></a></li>
+
+
+
+    <li><a href="#Inline_response_200_2"><code>Inline_response_200_2</code></a></li>
+
+
+</ol>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="User">User</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">id </div><div class="param-desc"><span class="param-type">Long</span> Unique identifier of the user.</div>
+
+        <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> The name of the user.</div>
+
+        <div class="param">email </div><div class="param-desc"><span class="param-type">String</span> The email address of the user.</div>
+
+        <div class="param">facebook_id </div><div class="param-desc"><span class="param-type">String</span> The Facebook ID of the user if known.</div>
+
+        <div class="param">google_id </div><div class="param-desc"><span class="param-type">String</span> The Google+ ID of the user if known.</div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="Action">Action</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">id </div><div class="param-desc"><span class="param-type">Long</span> Unique identifier of the feed item.</div>
+
+        <div class="param">timestamp </div><div class="param-desc"><span class="param-type">Long</span> The unix timestamp of the creation.</div>
+
+        <div class="param">type </div><div class="param-desc"><span class="param-type">Integer</span> The type enum of the action.</div>
+
+        <div class="param">culprit </div><div class="param-desc"><span class="param-type">User</span> </div>
+
+        <div class="param">victim </div><div class="param-desc"><span class="param-type">User</span> </div>
+
+        <div class="param">series </div><div class="param-desc"><span class="param-type">Series</span> </div>
+
+        <div class="param">episode </div><div class="param-desc"><span class="param-type">Episode</span> </div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="Series">Series</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">trakt_id </div><div class="param-desc"><span class="param-type">Long</span> The trakt ID of the series.</div>
+
+        <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> The title of the show.</div>
+
+        <div class="param">thumb </div><div class="param-desc"><span class="param-type">String</span> Link to an thumb image for the show</div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="Episode">Episode</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">trakt_id </div><div class="param-desc"><span class="param-type">Long</span> The trakt ID of the series.</div>
+
+        <div class="param">number </div><div class="param-desc"><span class="param-type">Integer</span> The number of the episode</div>
+
+        <div class="param">season </div><div class="param-desc"><span class="param-type">Integer</span> The season of the episode</div>
+
+        <div class="param">title </div><div class="param-desc"><span class="param-type">String</span> The title of the episode</div>
+
+        <div class="param">thumb </div><div class="param-desc"><span class="param-type">String</span> The link to the thumb image for the episode</div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="Inline_response_200">Inline_response_200</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> The name of the user.</div>
+
+        <div class="param">id </div><div class="param-desc"><span class="param-type">Long</span> Unique identifier of the user.</div>
+
+        <div class="param">email </div><div class="param-desc"><span class="param-type">String</span> The email address of the user.</div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="User">User</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> The name of the user.</div>
+
+        <div class="param">email </div><div class="param-desc"><span class="param-type">String</span> The email address of the user.</div>
+
+        <div class="param">facebook_id </div><div class="param-desc"><span class="param-type">String</span> The Facebook ID of the user if known.</div>
+
+        <div class="param">google_id </div><div class="param-desc"><span class="param-type">String</span> The Google+ ID of the user if known.</div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="Inline_response_200_1">Inline_response_200_1</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">google_id </div><div class="param-desc"><span class="param-type">String</span> The Google+ ID of the user if known.</div>
+
+        <div class="param">series </div><div class="param-desc"><span class="param-type">array[Series]</span> </div>
+
+        <div class="param">name </div><div class="param-desc"><span class="param-type">String</span> The name of the user.</div>
+
+        <div class="param">id </div><div class="param-desc"><span class="param-type">Long</span> Unique identifier of the user.</div>
+
+        <div class="param">email </div><div class="param-desc"><span class="param-type">String</span> The email address of the user.</div>
+
+        <div class="param">facebook_id </div><div class="param-desc"><span class="param-type">String</span> The Facebook ID of the user if known.</div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+
+<div class="model">
+    <h3 class="field-label"><a name="Inline_response_200_2">Inline_response_200_2</a> <a class="up" href="#__Models">Up</a></h3>
+    <div class="field-items">
+        <div class="param">watched </div><div class="param-desc"><span class="param-type">array[BigDecimal]</span> </div>
+
+        <div class="param">liked </div><div class="param-desc"><span class="param-type">array[BigDecimal]</span> </div>
+
+        <div class="param">skipped </div><div class="param-desc"><span class="param-type">array[BigDecimal]</span> </div>
+
+
+    </div>  <!-- field-items -->
+</div>
+
+
+</body>
+</html>
