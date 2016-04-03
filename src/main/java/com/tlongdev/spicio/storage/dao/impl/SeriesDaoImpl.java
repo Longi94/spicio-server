@@ -5,16 +5,13 @@ import com.tlongdev.spicio.controller.request.SeriesBody;
 import com.tlongdev.spicio.converter.EpisodeConverter;
 import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import com.tlongdev.spicio.storage.dao.SeriesDao;
-import com.tlongdev.spicio.storage.document.EpisodeDocument;
-import com.tlongdev.spicio.storage.document.SeriesDocument;
-import com.tlongdev.spicio.storage.document.UserDocument;
+import com.tlongdev.spicio.storage.document.*;
 import com.tlongdev.spicio.storage.mongo.SeriesRepository;
 import com.tlongdev.spicio.storage.mongo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static com.tlongdev.spicio.converter.SeriesConverter.convertToSeriesDocument;
 
@@ -92,12 +89,18 @@ public class SeriesDaoImpl implements SeriesDao {
             throw new DocumentNotFoundException();
         }
 
-        //Add the sepisode to the series
+        //Add the episode to the series
         if (seriesDoc.getEpisodes() == null) {
             seriesDoc.setEpisodes(new HashMap<Integer, EpisodeDocument>());
         }
         Map<Integer, EpisodeDocument> map = seriesDoc.getEpisodes();
         map.put(episodeBody.getTraktId(), EpisodeConverter.convertToEpisodeDocument(episodeBody));
+
+        if (user.getHistory() == null) {
+            user.setHistory(new ArrayList<ActivityDocument>());
+        }
+
+        List<ActivityDocument> history = user.getHistory();
 
         seriesRepository.save(seriesDoc);
     }

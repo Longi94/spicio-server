@@ -23,6 +23,9 @@ public class EpisodeBody {
     private String thumb;
 
     @NotNull
+    private Long timestamp;
+
+    @NotNull
     private Boolean watched;
 
     @NotNull
@@ -61,5 +64,9 @@ public class EpisodeBody {
 
     public String getThumb() {
         return thumb;
+    }
+
+    public Long getTimestamp() {
+        return timestamp;
     }
 }

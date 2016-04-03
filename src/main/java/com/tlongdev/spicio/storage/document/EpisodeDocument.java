@@ -1,11 +1,13 @@
 package com.tlongdev.spicio.storage.document;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Long
  * @since 2016. 03. 19.
  */
+@Document(collection = "episodes")
 public class EpisodeDocument {
 
     @Id private Integer traktId;

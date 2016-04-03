@@ -34,7 +34,7 @@ public class UserDocument {
 
     private Set<Integer> series;
 
-    private List<ActionDocument> history;
+    private List<ActivityDocument> history;
 
     public Long getId() {
         return id;
@@ -92,11 +92,11 @@ public class UserDocument {
         this.series = series;
     }
 
-    public List<ActionDocument> getHistory() {
+    public List<ActivityDocument> getHistory() {
         return history;
     }
 
-    public void setHistory(List<ActionDocument> history) {
+    public void setHistory(List<ActivityDocument> history) {
         this.history = history;
     }
 
