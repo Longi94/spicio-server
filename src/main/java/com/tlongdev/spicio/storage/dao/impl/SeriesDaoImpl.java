@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.storage.dao.impl;
 
 import com.tlongdev.spicio.controller.request.SeriesBody;
+import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import com.tlongdev.spicio.storage.dao.SeriesDao;
 import com.tlongdev.spicio.storage.document.SeriesDocument;
 import com.tlongdev.spicio.storage.document.UserDocument;
@@ -22,13 +23,13 @@ public class SeriesDaoImpl implements SeriesDao {
     @Autowired private SeriesRepository seriesRepository;
 
     @Override
-    public SeriesDocument addSeries(long userId, SeriesBody series) {
+    public SeriesDocument addSeries(long userId, SeriesBody series) throws DocumentNotFoundException {
         //Find the user
         UserDocument user = userRepository.findUserById(userId);
 
         if (user == null) {
             //User doesn't exist
-            return null;
+            throw new DocumentNotFoundException();
         }
 
         //Add the series to the user
@@ -49,13 +50,13 @@ public class SeriesDaoImpl implements SeriesDao {
     }
 
     @Override
-    public boolean removeSeries(long userId, int seriesId) {
+    public boolean removeSeries(long userId, int seriesId) throws DocumentNotFoundException {
         //Find the user
         UserDocument user = userRepository.findUserById(userId);
 
         if (user == null) {
             //User doesn't exist
-            return false;
+            throw new DocumentNotFoundException();
         }
 
         //Remove the series from the user

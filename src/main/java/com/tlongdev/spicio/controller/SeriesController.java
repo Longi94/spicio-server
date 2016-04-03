@@ -20,22 +20,14 @@ public class SeriesController {
     @Autowired private SeriesDao seriesDao;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addSeries(@PathVariable long userId, @Valid @RequestBody SeriesBody seriesBody) {
+    public ResponseEntity<Void> addSeries(@PathVariable long userId, @Valid @RequestBody SeriesBody seriesBody) {
         SeriesDocument result = seriesDao.addSeries(userId, seriesBody);
-
-        if (result != null) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(null);
     }
 
     @RequestMapping(value = "/{seriesId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteSeries(@PathVariable long userId, @PathVariable int seriesId) {
-        if (seriesDao.removeSeries(userId, seriesId)) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteSeries(@PathVariable long userId, @PathVariable int seriesId) {
+        seriesDao.removeSeries(userId, seriesId);
+        return ResponseEntity.ok(null);
     }
 }

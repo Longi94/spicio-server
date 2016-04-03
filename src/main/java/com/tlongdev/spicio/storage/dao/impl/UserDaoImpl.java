@@ -6,6 +6,7 @@ import com.tlongdev.spicio.controller.response.UserResponse;
 import com.tlongdev.spicio.controller.response.UserResponseFull;
 import com.tlongdev.spicio.converter.SeriesConverter;
 import com.tlongdev.spicio.converter.UserConverter;
+import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import com.tlongdev.spicio.storage.dao.SequenceDao;
 import com.tlongdev.spicio.storage.dao.UserDao;
 import com.tlongdev.spicio.storage.document.SeriesDocument;
@@ -30,7 +31,7 @@ public class UserDaoImpl implements UserDao {
     @Autowired private SeriesRepository seriesRepository;
 
     @Override
-    public UserResponse getUser(long userId) {
+    public UserResponse getUser(long userId) throws DocumentNotFoundException {
         //Find the user
         UserDocument userDoc = userRepository.findUserById(userId);
 
@@ -39,7 +40,7 @@ public class UserDaoImpl implements UserDao {
             return UserConverter.convertToUserResponse(userDoc);
         } else {
             //User doesn't exist
-            return null;
+            throw new DocumentNotFoundException();
         }
     }
 
@@ -95,9 +96,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public UserResponseFull getUserFull(long userId) {
+    public UserResponseFull getUserFull(long userId) throws DocumentNotFoundException {
         //Get the user
         UserDocument userDoc = userRepository.findUserById(userId);
+
+        //Check if user exists
+        if (userDoc == null) {
+            throw new DocumentNotFoundException();
+        }
 
         //Get the series objects for the suer
         Iterable<SeriesDocument> seriesDocs = seriesRepository.findAll(userDoc.getSeries());

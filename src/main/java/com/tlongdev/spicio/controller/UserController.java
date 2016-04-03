@@ -41,9 +41,7 @@ public class UserController {
 
         long id = userDao.addUser(user);
 
-        URI locationUri = ServletUriComponentsBuilder
-                .fromCurrentRequest().path("/{id}")
-                .buildAndExpand(id).toUri();
+        URI locationUri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
         return ResponseEntity.created(locationUri).body(null);
     }
 
@@ -51,25 +49,16 @@ public class UserController {
     public ResponseEntity<?> getUser(@PathVariable long userId, @RequestParam(value = "full", defaultValue = "false") String full) {
         if (full.equals("true")) {
             UserResponseFull user = userDao.getUserFull(userId);
-            if (user == null) {
-                return ResponseEntity.notFound().build();
-            }
             return ResponseEntity.ok(user);
         } else {
             UserResponse user = userDao.getUser(userId);
-            if (user == null) {
-                return ResponseEntity.notFound().build();
-            }
             return ResponseEntity.ok(user);
         }
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteUser(@PathVariable long userId) {
-        if (userDao.deleteAllUserData(userId)) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        userDao.deleteAllUserData(userId);
+        return ResponseEntity.ok(null);
     }
 }
