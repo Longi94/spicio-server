@@ -1,14 +1,20 @@
 package com.tlongdev.spicio.storage.dao.impl;
 
+import com.tlongdev.spicio.controller.request.EpisodeBody;
 import com.tlongdev.spicio.controller.request.SeriesBody;
+import com.tlongdev.spicio.converter.EpisodeConverter;
 import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import com.tlongdev.spicio.storage.dao.SeriesDao;
+import com.tlongdev.spicio.storage.document.EpisodeDocument;
 import com.tlongdev.spicio.storage.document.SeriesDocument;
 import com.tlongdev.spicio.storage.document.UserDocument;
 import com.tlongdev.spicio.storage.mongo.SeriesRepository;
 import com.tlongdev.spicio.storage.mongo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.tlongdev.spicio.converter.SeriesConverter.convertToSeriesDocument;
 
@@ -23,7 +29,7 @@ public class SeriesDaoImpl implements SeriesDao {
     @Autowired private SeriesRepository seriesRepository;
 
     @Override
-    public SeriesDocument addSeries(long userId, SeriesBody series) throws DocumentNotFoundException {
+    public void addSeries(long userId, SeriesBody series) throws DocumentNotFoundException {
         //Find the user
         UserDocument user = userRepository.findUserById(userId);
 
@@ -42,10 +48,10 @@ public class SeriesDaoImpl implements SeriesDao {
         //Save the series to the database
         SeriesDocument newSeries = convertToSeriesDocument(series);
         if (seriesDoc == null) {
-            return seriesRepository.insert(newSeries);
+            seriesRepository.insert(newSeries);
         } else {
             newSeries.setTraktId(seriesDoc.getTraktId());
-            return seriesRepository.save(newSeries);
+            seriesRepository.save(newSeries);
         }
     }
 
@@ -66,5 +72,33 @@ public class SeriesDaoImpl implements SeriesDao {
         userRepository.save(user);
 
         return removed;
+    }
+
+    @Override
+    public void addEpisode(long userId, int seriesId, EpisodeBody episodeBody) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        //Check if series exists
+        SeriesDocument seriesDoc = seriesRepository.findSeriesByTraktId(seriesId);
+
+        if (seriesDoc == null) {
+            //Series doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        //Add the sepisode to the series
+        if (seriesDoc.getEpisodes() == null) {
+            seriesDoc.setEpisodes(new HashMap<Integer, EpisodeDocument>());
+        }
+        Map<Integer, EpisodeDocument> map = seriesDoc.getEpisodes();
+        map.put(episodeBody.getTraktId(), EpisodeConverter.convertToEpisodeDocument(episodeBody));
+
+        seriesRepository.save(seriesDoc);
     }
 }
