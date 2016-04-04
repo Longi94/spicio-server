@@ -27,7 +27,6 @@ public class UserConverter {
         userResponse.setFacebookId(user.getFacebookId());
         userResponse.setGoogleId(user.getGoogleId());
         userResponse.setFriends(user.getFriends());
-        userResponse.setHistory(user.getHistory());
         return userResponse;
     }
 

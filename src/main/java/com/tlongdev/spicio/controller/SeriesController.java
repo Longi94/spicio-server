@@ -39,6 +39,10 @@ public class SeriesController {
         }
 
         seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.checkEpisode(userId, seriesId, episodeBody);
+        seriesDao.skipEpisode(userId, seriesId, episodeBody);
+        seriesDao.likeEpisode(userId, seriesId, episodeBody);
+
         return ResponseEntity.ok(null);
     }
 }

@@ -63,7 +63,7 @@ public class SeriesDaoImpl implements SeriesDao {
         }
 
         //Remove the series from the user
-        boolean removed = user.getSeries().remove(seriesId);
+        boolean removed = user.getSeries().remove(seriesId) != null;
 
         //Update the user
         userRepository.save(user);
@@ -73,13 +73,6 @@ public class SeriesDaoImpl implements SeriesDao {
 
     @Override
     public void addEpisode(long userId, int seriesId, EpisodeBody episodeBody) {
-        //Find the user
-        UserDocument user = userRepository.findUserById(userId);
-
-        if (user == null) {
-            //User doesn't exist
-            throw new DocumentNotFoundException();
-        }
 
         //Check if series exists
         SeriesDocument seriesDoc = seriesRepository.findSeriesByTraktId(seriesId);
@@ -90,18 +83,72 @@ public class SeriesDaoImpl implements SeriesDao {
         }
 
         //Add the episode to the series
-        if (seriesDoc.getEpisodes() == null) {
-            seriesDoc.setEpisodes(new HashMap<Integer, EpisodeDocument>());
-        }
         Map<Integer, EpisodeDocument> map = seriesDoc.getEpisodes();
         map.put(episodeBody.getTraktId(), EpisodeConverter.convertToEpisodeDocument(episodeBody));
 
-        if (user.getHistory() == null) {
-            user.setHistory(new ArrayList<ActivityDocument>());
+        seriesRepository.save(seriesDoc);
+    }
+
+    @Override
+    public void checkEpisode(long userId, int seriesId, EpisodeBody body) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
         }
 
-        List<ActivityDocument> history = user.getHistory();
+        UserSeriesDocument series =  user.getSeries().get(seriesId);
+        if (body.isWatched()) {
+            series.getSkipped().remove(body.getTraktId());
+            series.getWatched().put(body.getTraktId(), body.getTimestamp());
+        } else {
+            series.getWatched().remove(body.getTraktId());
+        }
 
-        seriesRepository.save(seriesDoc);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void skipEpisode(long userId, int seriesId, EpisodeBody body) {
+
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        UserSeriesDocument series =  user.getSeries().get(seriesId);
+        if (body.isSkipped()) {
+            series.getWatched().remove(body.getTraktId());
+            series.getSkipped().put(body.getTraktId(), body.getTimestamp());
+        } else {
+            series.getSkipped().remove(body.getTraktId());
+        }
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void likeEpisode(long userId, int seriesId, EpisodeBody body) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        UserSeriesDocument series =  user.getSeries().get(seriesId);
+        if (body.isLiked()) {
+            series.getLiked().put(body.getTraktId(), body.getTimestamp());
+        } else {
+            series.getLiked().remove(body.getTraktId());
+        }
+
+        userRepository.save(user);
     }
 }

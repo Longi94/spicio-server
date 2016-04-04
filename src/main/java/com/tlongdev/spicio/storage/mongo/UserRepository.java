@@ -14,10 +14,6 @@ import java.util.List;
 public interface UserRepository extends MongoRepository<UserDocument, Long> {
     UserDocument findUserById(Long id);
 
-    UserDocument findUserByFacebookId(String facebookId);
-
-    UserDocument findUserByGoogleId(String googleId);
-
     UserDocument findUserByEmail(String email);
 
     List<UserDocument> findBySearchTermLike(String searchTerm);

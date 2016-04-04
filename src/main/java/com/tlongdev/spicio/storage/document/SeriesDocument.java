@@ -3,6 +3,7 @@ package com.tlongdev.spicio.storage.document;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -61,7 +62,7 @@ public class SeriesDocument {
 
     private String thumb;
 
-    private Map<Integer, EpisodeDocument> episodes;
+    private Map<Integer, EpisodeDocument> episodes = new HashMap<>();
 
     public String getTitle() {
         return title;

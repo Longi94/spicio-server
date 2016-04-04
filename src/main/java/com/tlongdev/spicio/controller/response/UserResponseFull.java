@@ -1,7 +1,6 @@
 package com.tlongdev.spicio.controller.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tlongdev.spicio.storage.document.ActivityDocument;
 
 import java.util.List;
 import java.util.Set;
@@ -28,8 +27,6 @@ public class UserResponseFull {
     private Set<Long> friends;
 
     private List<SeriesResponse> series;
-
-    private List<ActivityDocument> history;
 
     public long getId() {
         return id;
@@ -85,13 +82,5 @@ public class UserResponseFull {
 
     public void setSeries(List<SeriesResponse> series) {
         this.series = series;
-    }
-
-    public List<ActivityDocument> getHistory() {
-        return history;
-    }
-
-    public void setHistory(List<ActivityDocument> history) {
-        this.history = history;
     }
 }

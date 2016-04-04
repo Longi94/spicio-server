@@ -105,10 +105,10 @@ public class UserDaoImpl implements UserDao {
             throw new DocumentNotFoundException();
         }
 
-        //Get the series objects for the suer
-        Iterable<SeriesDocument> seriesDocs = seriesRepository.findAll(userDoc.getSeries());
+        //Get the series objects for the user
+        Iterable<SeriesDocument> seriesDocs = seriesRepository.findAll(userDoc.getSeries().keySet());
 
-        //Convert the series ióobjects to responses
+        //Convert the series objects to responses
         List<SeriesResponse> seriesResponses = new LinkedList<>();
         for (SeriesDocument seriesDoc: seriesDocs) {
             seriesResponses.add(SeriesConverter.convertToSeriesResponse(seriesDoc));

@@ -16,4 +16,10 @@ public interface SeriesDao {
     boolean removeSeries(long userId, int seriesId) throws DocumentNotFoundException;
 
     void addEpisode(long userId, int seriesId, EpisodeBody episodeBody);
+
+    void checkEpisode(long userId, int seriesId, EpisodeBody body);
+
+    void likeEpisode(long userId, int seriesId, EpisodeBody body);
+
+    void skipEpisode(long userId, int seriesId, EpisodeBody body);
 }

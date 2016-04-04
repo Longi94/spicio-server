@@ -4,8 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -30,11 +31,9 @@ public class UserDocument {
     @Indexed
     private String searchTerm;
 
-    private Set<Long> friends;
+    private Set<Long> friends = new HashSet<>();
 
-    private Set<Integer> series;
-
-    private List<ActivityDocument> history;
+    private Map<Integer, UserSeriesDocument> series = new HashMap<>();
 
     public Long getId() {
         return id;
@@ -84,20 +83,12 @@ public class UserDocument {
         this.friends = friends;
     }
 
-    public Set<Integer> getSeries() {
+    public Map<Integer, UserSeriesDocument> getSeries() {
         return series;
     }
 
-    public void setSeries(Set<Integer> series) {
+    public void setSeries(Map<Integer, UserSeriesDocument> series) {
         this.series = series;
-    }
-
-    public List<ActivityDocument> getHistory() {
-        return history;
-    }
-
-    public void setHistory(List<ActivityDocument> history) {
-        this.history = history;
     }
 
     public void buildSearchTerm() {
@@ -113,9 +104,6 @@ public class UserDocument {
     }
 
     public void addSeries(int traktId) {
-        if (series == null) {
-            series = new HashSet<>();
-        }
-        series.add(traktId);
+        series.put(traktId, new UserSeriesDocument());
     }
 }
