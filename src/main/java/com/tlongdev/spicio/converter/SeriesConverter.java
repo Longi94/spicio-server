@@ -2,7 +2,11 @@ package com.tlongdev.spicio.converter;
 
 import com.tlongdev.spicio.controller.request.SeriesBody;
 import com.tlongdev.spicio.controller.response.SeriesResponse;
+import com.tlongdev.spicio.controller.response.UserEpisodesResponse;
 import com.tlongdev.spicio.storage.document.SeriesDocument;
+import com.tlongdev.spicio.storage.document.UserSeriesDocument;
+
+import java.util.Map;
 
 /**
  * @author longi
@@ -66,5 +70,23 @@ public class SeriesConverter {
         response.setYear(seriesDocument.getYear());
         return response;
 
+    }
+
+    public static UserEpisodesResponse convertToUserSeriesResponse(UserSeriesDocument document) {
+        UserEpisodesResponse response = new UserEpisodesResponse();
+
+        for (Map.Entry<Integer, Long> entry : document.getWatched().entrySet()) {
+            response.getWatched().put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<Integer, Long> entry : document.getSkipped().entrySet()) {
+            response.getSkipped().put(entry.getKey(), entry.getValue());
+        }
+
+        for (Map.Entry<Integer, Long> entry : document.getLiked().entrySet()) {
+            response.getLiked().put(entry.getKey(), entry.getValue());
+        }
+
+        return response;
     }
 }

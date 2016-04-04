@@ -1,10 +1,8 @@
 package com.tlongdev.spicio.storage.dao.impl;
 
 import com.tlongdev.spicio.controller.request.UserBody;
-import com.tlongdev.spicio.controller.response.SeriesResponse;
 import com.tlongdev.spicio.controller.response.UserResponse;
 import com.tlongdev.spicio.controller.response.UserResponseFull;
-import com.tlongdev.spicio.converter.SeriesConverter;
 import com.tlongdev.spicio.converter.UserConverter;
 import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import com.tlongdev.spicio.storage.dao.SequenceDao;
@@ -108,18 +106,7 @@ public class UserDaoImpl implements UserDao {
         //Get the series objects for the user
         Iterable<SeriesDocument> seriesDocs = seriesRepository.findAll(userDoc.getSeries().keySet());
 
-        //Convert the series objects to responses
-        List<SeriesResponse> seriesResponses = new LinkedList<>();
-        for (SeriesDocument seriesDoc: seriesDocs) {
-            seriesResponses.add(SeriesConverter.convertToSeriesResponse(seriesDoc));
-        }
-
         //Convert the user to a response
-        UserResponseFull response = UserConverter.convertToUserResponseFull(userDoc);
-
-        //Add the series
-        response.setSeries(seriesResponses);
-
-        return response;
+        return UserConverter.convertToUserResponseFull(userDoc, seriesDocs);
     }
 }
