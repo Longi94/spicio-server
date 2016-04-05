@@ -25,15 +25,6 @@ public class EpisodeBody {
     @NotNull
     private Long timestamp;
 
-    @NotNull
-    private Boolean watched;
-
-    @NotNull
-    private Boolean skipped;
-
-    @NotNull
-    private Boolean liked;
-
     public Integer getSeason() {
         return season;
     }
@@ -48,18 +39,6 @@ public class EpisodeBody {
 
     public Integer getTraktId() {
         return traktId;
-    }
-
-    public Boolean isWatched() {
-        return watched;
-    }
-
-    public Boolean isLiked() {
-        return liked;
-    }
-
-    public Boolean isSkipped() {
-        return skipped;
     }
 
     public String getThumb() {

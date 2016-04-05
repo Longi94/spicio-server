@@ -31,18 +31,48 @@ public class SeriesController {
         return ResponseEntity.ok(null);
     }
 
-    @RequestMapping(value = "/{seriesId}/episodes")
-    public ResponseEntity<Void> markSeries(@PathVariable long userId, @PathVariable int seriesId,
-                                           @RequestBody @Valid EpisodeBody episodeBody) {
-        if (episodeBody.isSkipped() && episodeBody.isWatched()) {
-            return ResponseEntity.badRequest().body(null);
-        }
-
+    @RequestMapping(value = "/{seriesId}/episodes/checks", method = RequestMethod.POST)
+    public ResponseEntity<Void> checkEpisode(@PathVariable long userId, @PathVariable int seriesId,
+                                             @RequestBody @Valid EpisodeBody episodeBody) {
         seriesDao.addEpisode(userId, seriesId, episodeBody);
         seriesDao.checkEpisode(userId, seriesId, episodeBody);
-        seriesDao.skipEpisode(userId, seriesId, episodeBody);
-        seriesDao.likeEpisode(userId, seriesId, episodeBody);
+        return ResponseEntity.ok(null);
+    }
 
+    @RequestMapping(value = "/{seriesId}/episodes/checks/{episodeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> unCheckEpisode(@PathVariable long userId, @PathVariable int seriesId,
+                                               @PathVariable int episodeId) {
+        seriesDao.unCheckEpisode(userId, seriesId, episodeId);
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/{seriesId}/episodes/skips", method = RequestMethod.POST)
+    public ResponseEntity<Void> skipEpisode(@PathVariable long userId, @PathVariable int seriesId,
+                                             @RequestBody @Valid EpisodeBody episodeBody) {
+        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.skipEpisode(userId, seriesId, episodeBody);
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/{seriesId}/episodes/skips/{episodeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> unSkipEpisode(@PathVariable long userId, @PathVariable int seriesId,
+                                               @PathVariable int episodeId) {
+        seriesDao.unSkipEpisode(userId, seriesId, episodeId);
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/{seriesId}/episodes/likes", method = RequestMethod.POST)
+    public ResponseEntity<Void> likeEpisode(@PathVariable long userId, @PathVariable int seriesId,
+                                             @RequestBody @Valid EpisodeBody episodeBody) {
+        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.likeEpisode(userId, seriesId, episodeBody);
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/{seriesId}/episodes/likes/{episodeId}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> unLikeEpisode(@PathVariable long userId, @PathVariable int seriesId,
+                                              @PathVariable int episodeId) {
+        seriesDao.unLikeEpisode(userId, seriesId, episodeId);
         return ResponseEntity.ok(null);
     }
 }
