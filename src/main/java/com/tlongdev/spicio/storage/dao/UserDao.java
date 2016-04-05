@@ -3,6 +3,7 @@ package com.tlongdev.spicio.storage.dao;
 import com.tlongdev.spicio.controller.request.UserBody;
 import com.tlongdev.spicio.controller.response.UserResponse;
 import com.tlongdev.spicio.controller.response.UserResponseFull;
+import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Repository
 public interface UserDao {
 
-    UserResponse getUser(long userId);
+    UserResponse getUser(long userId) throws DocumentNotFoundException;
 
     List<UserResponse> findUsers(String name);
 
@@ -22,5 +23,5 @@ public interface UserDao {
 
     long addUser(UserBody userBody);
 
-    UserResponseFull getUserFull(long userId);
+    UserResponseFull getUserFull(long userId) throws DocumentNotFoundException;
 }

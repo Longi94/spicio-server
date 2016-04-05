@@ -3,7 +3,9 @@ package com.tlongdev.spicio.storage.document;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Long
@@ -12,12 +14,11 @@ import java.util.List;
 @Document(collection = "series")
 public class SeriesDocument {
 
+    @Id private Integer traktId;
+
     private String title;
 
     private Integer year;
-
-    @Id
-    private Integer traktId;
 
     private String slugName;
 
@@ -61,7 +62,7 @@ public class SeriesDocument {
 
     private String thumb;
 
-    private List<EpisodeDocument> episodes;
+    private Map<Integer, EpisodeDocument> episodes = new HashMap<>();
 
     public String getTitle() {
         return title;
@@ -253,5 +254,13 @@ public class SeriesDocument {
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public Map<Integer, EpisodeDocument> getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(Map<Integer, EpisodeDocument> episodes) {
+        this.episodes = episodes;
     }
 }

@@ -74,6 +74,8 @@ public class SeriesResponse {
 
     private String thumb;
 
+    private UserEpisodesResponse userEpisodes;
+
     public String getTitle() {
         return title;
     }
@@ -264,5 +266,13 @@ public class SeriesResponse {
 
     public void setThumb(String thumb) {
         this.thumb = thumb;
+    }
+
+    public void setUserEpisodes(UserEpisodesResponse userEpisodes) {
+        this.userEpisodes = userEpisodes;
+    }
+
+    public UserEpisodesResponse getUserEpisodes() {
+        return userEpisodes;
     }
 }

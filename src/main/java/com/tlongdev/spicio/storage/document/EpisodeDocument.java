@@ -1,47 +1,46 @@
 package com.tlongdev.spicio.storage.document;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author Long
  * @since 2016. 03. 19.
  */
+@Document(collection = "episodes")
 public class EpisodeDocument {
 
-    @JsonProperty("trakt_id")
-    @Id
-    private int traktId;
+    @Id private Integer traktId;
 
-    private int number;
+    private Integer number;
 
-    private int season;
+    private Integer season;
 
     private String title;
 
     private String thumb;
 
-    public int getTraktId() {
+    public Integer getTraktId() {
         return traktId;
     }
 
-    public void setTraktId(int traktId) {
+    public void setTraktId(Integer traktId) {
         this.traktId = traktId;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 
-    public int getSeason() {
+    public Integer getSeason() {
         return season;
     }
 
-    public void setSeason(int season) {
+    public void setSeason(Integer season) {
         this.season = season;
     }
 

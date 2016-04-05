@@ -1,7 +1,8 @@
 package com.tlongdev.spicio.storage.dao;
 
+import com.tlongdev.spicio.controller.request.EpisodeBody;
 import com.tlongdev.spicio.controller.request.SeriesBody;
-import com.tlongdev.spicio.storage.document.SeriesDocument;
+import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -10,7 +11,15 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface SeriesDao {
-    SeriesDocument addSeries(long userId, SeriesBody series);
+    void addSeries(long userId, SeriesBody series) throws DocumentNotFoundException;
 
-    boolean removeSeries(long userId, int seriesId);
+    boolean removeSeries(long userId, int seriesId) throws DocumentNotFoundException;
+
+    void addEpisode(long userId, int seriesId, EpisodeBody episodeBody);
+
+    void checkEpisode(long userId, int seriesId, EpisodeBody body);
+
+    void likeEpisode(long userId, int seriesId, EpisodeBody body);
+
+    void skipEpisode(long userId, int seriesId, EpisodeBody body);
 }

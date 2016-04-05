@@ -1,8 +1,8 @@
 package com.tlongdev.spicio.controller;
 
+import com.tlongdev.spicio.controller.request.EpisodeBody;
 import com.tlongdev.spicio.controller.request.SeriesBody;
 import com.tlongdev.spicio.storage.dao.SeriesDao;
-import com.tlongdev.spicio.storage.document.SeriesDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +20,29 @@ public class SeriesController {
     @Autowired private SeriesDao seriesDao;
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addSeries(@PathVariable long userId, @Valid @RequestBody SeriesBody seriesBody) {
-        SeriesDocument result = seriesDao.addSeries(userId, seriesBody);
-
-        if (result != null) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> addSeries(@PathVariable long userId, @Valid @RequestBody SeriesBody seriesBody) {
+        seriesDao.addSeries(userId, seriesBody);
+        return ResponseEntity.ok(null);
     }
 
     @RequestMapping(value = "/{seriesId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteSeries(@PathVariable long userId, @PathVariable int seriesId) {
-        if (seriesDao.removeSeries(userId, seriesId)) {
-            return ResponseEntity.ok(null);
-        } else {
-            return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deleteSeries(@PathVariable long userId, @PathVariable int seriesId) {
+        seriesDao.removeSeries(userId, seriesId);
+        return ResponseEntity.ok(null);
+    }
+
+    @RequestMapping(value = "/{seriesId}/episodes")
+    public ResponseEntity<Void> markSeries(@PathVariable long userId, @PathVariable int seriesId,
+                                           @RequestBody @Valid EpisodeBody episodeBody) {
+        if (episodeBody.isSkipped() && episodeBody.isWatched()) {
+            return ResponseEntity.badRequest().body(null);
         }
+
+        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.checkEpisode(userId, seriesId, episodeBody);
+        seriesDao.skipEpisode(userId, seriesId, episodeBody);
+        seriesDao.likeEpisode(userId, seriesId, episodeBody);
+
+        return ResponseEntity.ok(null);
     }
 }
