@@ -22,4 +22,10 @@ public interface SeriesDao {
     void likeEpisode(long userId, int seriesId, EpisodeBody body);
 
     void skipEpisode(long userId, int seriesId, EpisodeBody body);
+
+    void unCheckEpisode(long userId, int seriesId, int episodeId);
+
+    void unSkipEpisode(long userId, int seriesId, int episodeId);
+
+    void unLikeEpisode(long userId, int seriesId, int episodeId);
 }
