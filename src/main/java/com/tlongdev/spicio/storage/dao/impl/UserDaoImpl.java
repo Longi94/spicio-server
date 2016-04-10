@@ -206,6 +206,12 @@ public class UserDaoImpl implements UserDao {
             UserSeriesDocument userSeries = userDoc.getSeries().get(seriesDoc.getTraktId());
             SeriesSimpleResponse seriesResponse = SeriesConverter.convertToSeriesSimpleResponse(seriesDoc);
 
+            ActivityResponse seriesAdded = new ActivityResponse();
+            seriesAdded.setType(ActivityResponse.ADDED_SERIES);
+            seriesAdded.setTimestamp(userSeries.getTimestamp());
+            seriesAdded.setSeries(seriesResponse);
+            activities.add(seriesAdded);
+
             for (Map.Entry<Integer, Long> watched : userSeries.getWatched().entrySet()) {
 
                 EpisodeDocument episodeDoc = seriesDoc.getEpisodes().get(watched.getKey());

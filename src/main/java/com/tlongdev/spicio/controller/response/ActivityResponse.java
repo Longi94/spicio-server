@@ -13,6 +13,7 @@ public class ActivityResponse {
     public static final int SKIPPED = 1;
     public static final int LIKED = 2;
     public static final int BECAME_FRIENDS = 3;
+    public static final int ADDED_SERIES = 4;
 
     private int type;
 
