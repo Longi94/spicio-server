@@ -1,5 +1,8 @@
 package com.tlongdev.spicio.controller;
 
+import com.tlongdev.spicio.controller.response.ActivityResponse;
+import com.tlongdev.spicio.storage.dao.UserDao;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/users/{userId}")
 public class UserDataController {
+
+    @Autowired private UserDao userDao;
 
     @RequestMapping(value = "/discover", method = RequestMethod.GET)
     public ResponseEntity<Void> getRecommendations(@PathVariable long userId) {
@@ -33,8 +38,8 @@ public class UserDataController {
     }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
-    public ResponseEntity<List<?>> getHistory(@PathVariable long userId) {
-        // TODO: 2016.04.10. implement me
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+    public ResponseEntity<List<ActivityResponse>> getHistory(@PathVariable long userId) {
+        List<ActivityResponse> response = userDao.getHistory(userId);
+        return ResponseEntity.ok(response);
     }
 }

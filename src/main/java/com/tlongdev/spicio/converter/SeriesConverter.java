@@ -2,6 +2,7 @@ package com.tlongdev.spicio.converter;
 
 import com.tlongdev.spicio.controller.request.SeriesBody;
 import com.tlongdev.spicio.controller.response.SeriesResponse;
+import com.tlongdev.spicio.controller.response.SeriesSimpleResponse;
 import com.tlongdev.spicio.controller.response.UserEpisodesResponse;
 import com.tlongdev.spicio.storage.document.SeriesDocument;
 import com.tlongdev.spicio.storage.document.UserSeriesDocument;
@@ -87,6 +88,15 @@ public class SeriesConverter {
             response.getLiked().put(entry.getKey(), entry.getValue());
         }
 
+        return response;
+    }
+
+    public static SeriesSimpleResponse convertToSeriesSimpleResponse(SeriesDocument seriesDoc) {
+        SeriesSimpleResponse response = new SeriesSimpleResponse();
+        response.setTraktId(seriesDoc.getTraktId());
+        response.setThumb(seriesDoc.getThumb());
+        response.setTitle(seriesDoc.getTitle());
+        response.setPosterThumb(seriesDoc.getPosterThumb());
         return response;
     }
 }

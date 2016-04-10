@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.converter;
 
 import com.tlongdev.spicio.controller.request.EpisodeBody;
+import com.tlongdev.spicio.controller.response.EpisodeSimpleResponse;
 import com.tlongdev.spicio.storage.document.EpisodeDocument;
 
 /**
@@ -17,5 +18,15 @@ public class EpisodeConverter {
         document.setThumb(body.getThumb());
         document.setTitle(body.getTitle());
         return document;
+    }
+
+    public static EpisodeSimpleResponse convertToEpisodeSimpleResponse(EpisodeDocument document) {
+        EpisodeSimpleResponse response = new EpisodeSimpleResponse();
+        response.setNumber(document.getNumber());
+        response.setTitle(document.getTitle());
+        response.setThumb(document.getThumb());
+        response.setSeason(document.getSeason());
+        response.setTraktId(document.getTraktId());
+        return response;
     }
 }
