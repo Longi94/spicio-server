@@ -3,6 +3,7 @@ package com.tlongdev.spicio.storage.dao.impl;
 import com.tlongdev.spicio.controller.request.EpisodeBody;
 import com.tlongdev.spicio.controller.request.SeriesBody;
 import com.tlongdev.spicio.controller.response.SeriesResponse;
+import com.tlongdev.spicio.controller.response.UserEpisodesResponse;
 import com.tlongdev.spicio.converter.EpisodeConverter;
 import com.tlongdev.spicio.converter.SeriesConverter;
 import com.tlongdev.spicio.exception.DocumentNotFoundException;
@@ -207,5 +208,18 @@ public class SeriesDaoImpl implements SeriesDao {
         }
 
         return response;
+    }
+
+    @Override
+    public UserEpisodesResponse getEpisodes(long userId, int seriesId) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null || !user.getSeries().containsKey(seriesId)) {
+            //User or series doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        return SeriesConverter.convertToUserSeriesResponse(user.getSeries().get(seriesId));
     }
 }

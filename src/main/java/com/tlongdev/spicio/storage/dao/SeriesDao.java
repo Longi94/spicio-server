@@ -3,6 +3,7 @@ package com.tlongdev.spicio.storage.dao;
 import com.tlongdev.spicio.controller.request.EpisodeBody;
 import com.tlongdev.spicio.controller.request.SeriesBody;
 import com.tlongdev.spicio.controller.response.SeriesResponse;
+import com.tlongdev.spicio.controller.response.UserEpisodesResponse;
 import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import org.springframework.stereotype.Repository;
 
@@ -33,4 +34,6 @@ public interface SeriesDao {
     void unLikeEpisode(long userId, int seriesId, int episodeId);
 
     List<SeriesResponse> getSeries(long userId);
+
+    UserEpisodesResponse getEpisodes(long userId, int seriesId);
 }
