@@ -99,13 +99,9 @@ public class SeriesDaoImpl implements SeriesDao {
             throw new DocumentNotFoundException();
         }
 
-        UserSeriesDocument series =  user.getSeries().get(seriesId);
-        if (body.isWatched()) {
-            series.getSkipped().remove(body.getTraktId());
-            series.getWatched().put(body.getTraktId(), body.getTimestamp());
-        } else {
-            series.getWatched().remove(body.getTraktId());
-        }
+        UserSeriesDocument series = user.getSeries().get(seriesId);
+        series.getSkipped().remove(body.getTraktId());
+        series.getWatched().put(body.getTraktId(), body.getTimestamp());
 
         userRepository.save(user);
     }
@@ -121,13 +117,9 @@ public class SeriesDaoImpl implements SeriesDao {
             throw new DocumentNotFoundException();
         }
 
-        UserSeriesDocument series =  user.getSeries().get(seriesId);
-        if (body.isSkipped()) {
-            series.getWatched().remove(body.getTraktId());
-            series.getSkipped().put(body.getTraktId(), body.getTimestamp());
-        } else {
-            series.getSkipped().remove(body.getTraktId());
-        }
+        UserSeriesDocument series = user.getSeries().get(seriesId);
+        series.getWatched().remove(body.getTraktId());
+        series.getSkipped().put(body.getTraktId(), body.getTimestamp());
 
         userRepository.save(user);
     }
@@ -142,12 +134,52 @@ public class SeriesDaoImpl implements SeriesDao {
             throw new DocumentNotFoundException();
         }
 
-        UserSeriesDocument series =  user.getSeries().get(seriesId);
-        if (body.isLiked()) {
-            series.getLiked().put(body.getTraktId(), body.getTimestamp());
-        } else {
-            series.getLiked().remove(body.getTraktId());
+        user.getSeries().get(seriesId).getLiked().put(body.getTraktId(), body.getTimestamp());
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void unCheckEpisode(long userId, int seriesId, int episodeId) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
         }
+
+        user.getSeries().get(seriesId).getWatched().remove(episodeId);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void unSkipEpisode(long userId, int seriesId, int episodeId) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        user.getSeries().get(seriesId).getSkipped().remove(episodeId);
+
+        userRepository.save(user);
+    }
+
+    @Override
+    public void unLikeEpisode(long userId, int seriesId, int episodeId) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        user.getSeries().get(seriesId).getLiked().remove(episodeId);
 
         userRepository.save(user);
     }
