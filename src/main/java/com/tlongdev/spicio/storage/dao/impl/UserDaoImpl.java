@@ -130,8 +130,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void addFriend(long userId, long friendId) {
-
+    public void addFriend(long userId, long friendId) throws DocumentNotFoundException {
         //Get the user
         UserDocument userDoc = userRepository.findUserById(userId);
 
@@ -147,5 +146,25 @@ public class UserDaoImpl implements UserDao {
         friendDoc.getFriends().add(userId);
         userRepository.save(userDoc);
         userRepository.save(friendDoc);
+    }
+
+    @Override
+    public void removeFriend(long userId, long friendId) throws DocumentNotFoundException {
+        //Get the user
+        UserDocument userDoc = userRepository.findUserById(userId);
+
+        //Get the friend
+        UserDocument friendDoc = userRepository.findUserById(friendId);
+
+        //Check if both users exists
+        if (userDoc == null || friendDoc == null) {
+            throw new DocumentNotFoundException();
+        }
+
+        userDoc.getFriends().remove(friendId);
+        friendDoc.getFriends().remove(userId);
+        userRepository.save(userDoc);
+        userRepository.save(friendDoc);
+
     }
 }

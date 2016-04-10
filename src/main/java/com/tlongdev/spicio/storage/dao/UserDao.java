@@ -27,5 +27,7 @@ public interface UserDao {
 
     UserResponseFull getUserFull(long userId) throws DocumentNotFoundException;
 
-    void addFriend(long userId, long friendId);
+    void addFriend(long userId, long friendId) throws DocumentNotFoundException;
+
+    void removeFriend(long userId, long friendId) throws DocumentNotFoundException;
 }
