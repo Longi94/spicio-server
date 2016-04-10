@@ -128,4 +128,24 @@ public class UserDaoImpl implements UserDao {
         //Convert the user to a response
         return UserConverter.convertToUserResponseFull(userDoc, seriesDocs);
     }
+
+    @Override
+    public void addFriend(long userId, long friendId) {
+
+        //Get the user
+        UserDocument userDoc = userRepository.findUserById(userId);
+
+        //Get the friend
+        UserDocument friendDoc = userRepository.findUserById(friendId);
+
+        //Check if both users exists
+        if (userDoc == null || friendDoc == null) {
+            throw new DocumentNotFoundException();
+        }
+
+        userDoc.getFriends().add(friendId);
+        friendDoc.getFriends().add(userId);
+        userRepository.save(userDoc);
+        userRepository.save(friendDoc);
+    }
 }
