@@ -11,6 +11,7 @@ import com.tlongdev.spicio.storage.document.SeriesDocument;
 import com.tlongdev.spicio.storage.document.UserDocument;
 import com.tlongdev.spicio.storage.mongo.SeriesRepository;
 import com.tlongdev.spicio.storage.mongo.UserRepository;
+import com.tlongdev.spicio.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -68,7 +69,7 @@ public class UserDaoImpl implements UserDao {
 
         // Convert documents to responses
         List<UserResponse> response = new LinkedList<>();
-        for (UserDocument friend : userRepository.findAll(userDoc.getFriends())) {
+        for (UserDocument friend : userRepository.findAll(userDoc.getFriends().keySet())) {
             response.add(UserConverter.convertToUserResponse(friend));
         }
 
@@ -126,7 +127,7 @@ public class UserDaoImpl implements UserDao {
         Iterable<SeriesDocument> seriesDocs = seriesRepository.findAll(userDoc.getSeries().keySet());
 
         //Get the friends of the user
-        Iterable<UserDocument> friendDocs = userRepository.findAll(userDoc.getFriends());
+        Iterable<UserDocument> friendDocs = userRepository.findAll(userDoc.getFriends().keySet());
 
         //Convert the user to a response
         return UserConverter.convertToUserResponseFull(userDoc, seriesDocs, friendDocs);
@@ -145,8 +146,8 @@ public class UserDaoImpl implements UserDao {
             throw new DocumentNotFoundException();
         }
 
-        userDoc.getFriends().add(friendId);
-        friendDoc.getFriends().add(userId);
+        userDoc.getFriends().put(friendId, Util.currentTimeSeconds());
+        friendDoc.getFriends().put(userId, Util.currentTimeSeconds());
         userRepository.save(userDoc);
         userRepository.save(friendDoc);
     }

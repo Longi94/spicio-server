@@ -5,9 +5,7 @@ import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author Long
@@ -31,7 +29,7 @@ public class UserDocument {
     @Indexed
     private String searchTerm;
 
-    private Set<Long> friends = new HashSet<>();
+    private Map<Long, Long> friends = new HashMap<>();
 
     private Map<Integer, UserSeriesDocument> series = new HashMap<>();
 
@@ -75,11 +73,11 @@ public class UserDocument {
         this.googleId = googleId;
     }
 
-    public Set<Long> getFriends() {
+    public Map<Long, Long> getFriends() {
         return friends;
     }
 
-    public void setFriends(Set<Long> friends) {
+    public void setFriends(Map<Long, Long> friends) {
         this.friends = friends;
     }
 
