@@ -125,8 +125,11 @@ public class UserDaoImpl implements UserDao {
         //Get the series objects for the user
         Iterable<SeriesDocument> seriesDocs = seriesRepository.findAll(userDoc.getSeries().keySet());
 
+        //Get the friends of the user
+        Iterable<UserDocument> friendDocs = userRepository.findAll(userDoc.getFriends());
+
         //Convert the user to a response
-        return UserConverter.convertToUserResponseFull(userDoc, seriesDocs);
+        return UserConverter.convertToUserResponseFull(userDoc, seriesDocs, friendDocs);
     }
 
     @Override

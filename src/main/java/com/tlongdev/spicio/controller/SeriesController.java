@@ -90,11 +90,4 @@ public class SeriesController {
         seriesDao.unLikeEpisode(userId, seriesId, episodeId);
         return ResponseEntity.ok(null);
     }
-
-    @RequestMapping(value = "/{seriesId}/episodes", method = RequestMethod.PUT )
-    public ResponseEntity<Void> updateEpisode(@PathVariable long userId, @PathVariable int seriesId,
-                                            @RequestBody @Valid EpisodeBody episodeBody) {
-        // TODO: 2016.04.10. implement me
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
-    }
 }
