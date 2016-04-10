@@ -179,7 +179,8 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public List<ActivityResponse> getHistory(long userId) {
+    public List<ActivityResponse> getHistory(long userId, boolean includeCulprit,
+                                             long ignoreVictim) throws DocumentNotFoundException {
         //Get the user
         UserDocument userDoc = userRepository.findUserById(userId);
 
@@ -189,14 +190,21 @@ public class UserDaoImpl implements UserDao {
         }
 
         List<ActivityResponse> activities = new LinkedList<>();
+        UserResponse culprit = null;
+        if (includeCulprit) {
+            culprit = UserConverter.convertToUserResponse(userDoc);
+        }
 
         //Add the befriending activities
         for (UserDocument friendDoc : userRepository.findAll(userDoc.getFriends().keySet())) {
-            ActivityResponse response = new ActivityResponse();
-            response.setType(ActivityResponse.BECAME_FRIENDS);
-            response.setTimestamp(userDoc.getFriends().get(friendDoc.getId()));
-            response.setVictim(UserConverter.convertToUserResponse(friendDoc));
-            activities.add(response);
+            if (friendDoc.getId() != ignoreVictim) {
+                ActivityResponse response = new ActivityResponse();
+                response.setType(ActivityResponse.BECAME_FRIENDS);
+                response.setTimestamp(userDoc.getFriends().get(friendDoc.getId()));
+                response.setVictim(UserConverter.convertToUserResponse(friendDoc));
+                response.setCulprit(culprit);
+                activities.add(response);
+            }
         }
 
         //Add the series/episode activities
@@ -210,8 +218,10 @@ public class UserDaoImpl implements UserDao {
             seriesAdded.setType(ActivityResponse.ADDED_SERIES);
             seriesAdded.setTimestamp(userSeries.getTimestamp());
             seriesAdded.setSeries(seriesResponse);
+            seriesAdded.setCulprit(culprit);
             activities.add(seriesAdded);
 
+            //Add checks
             for (Map.Entry<Integer, Long> watched : userSeries.getWatched().entrySet()) {
 
                 EpisodeDocument episodeDoc = seriesDoc.getEpisodes().get(watched.getKey());
@@ -221,10 +231,12 @@ public class UserDaoImpl implements UserDao {
                 response.setEpisode(EpisodeConverter.convertToEpisodeSimpleResponse(episodeDoc));
                 response.setSeries(seriesResponse);
                 response.setTimestamp(watched.getValue());
+                response.setCulprit(culprit);
 
                 activities.add(response);
             }
 
+            //Add skips
             for (Map.Entry<Integer, Long> skipped : userSeries.getSkipped().entrySet()) {
 
                 EpisodeDocument episodeDoc = seriesDoc.getEpisodes().get(skipped.getKey());
@@ -234,10 +246,12 @@ public class UserDaoImpl implements UserDao {
                 response.setEpisode(EpisodeConverter.convertToEpisodeSimpleResponse(episodeDoc));
                 response.setSeries(seriesResponse);
                 response.setTimestamp(skipped.getValue());
+                response.setCulprit(culprit);
 
                 activities.add(response);
             }
 
+            //Add likes
             for (Map.Entry<Integer, Long> liked : userSeries.getLiked().entrySet()) {
 
                 EpisodeDocument episodeDoc = seriesDoc.getEpisodes().get(liked.getKey());
@@ -247,11 +261,31 @@ public class UserDaoImpl implements UserDao {
                 response.setEpisode(EpisodeConverter.convertToEpisodeSimpleResponse(episodeDoc));
                 response.setSeries(seriesResponse);
                 response.setTimestamp(liked.getValue());
+                response.setCulprit(culprit);
 
                 activities.add(response);
             }
         }
 
         return activities;
+    }
+
+    @Override
+    public List<ActivityResponse> getFeed(long userId) throws DocumentNotFoundException {
+        //Get the user
+        UserDocument userDoc = userRepository.findUserById(userId);
+
+        //Check if user exists
+        if (userDoc == null) {
+            throw new DocumentNotFoundException();
+        }
+
+        List<ActivityResponse> response = new LinkedList<>();
+
+        //Get the histories of the friends
+        for (UserDocument friendDoc : userRepository.findAll(userDoc.getFriends().keySet())) {
+            response.addAll(getHistory(friendDoc.getId(), true, userId));
+        }
+        return response;
     }
 }

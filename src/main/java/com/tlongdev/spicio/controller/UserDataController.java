@@ -32,14 +32,14 @@ public class UserDataController {
     }
 
     @RequestMapping(value = "/feed", method = RequestMethod.GET)
-    public ResponseEntity<List<?>> getFeed(@PathVariable long userId) {
-        // TODO: 2016.04.10. implement me
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+    public ResponseEntity<List<ActivityResponse>> getFeed(@PathVariable long userId) {
+        List<ActivityResponse> response = userDao.getFeed(userId);
+        return ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     public ResponseEntity<List<ActivityResponse>> getHistory(@PathVariable long userId) {
-        List<ActivityResponse> response = userDao.getHistory(userId);
+        List<ActivityResponse> response = userDao.getHistory(userId, false, -1);
         return ResponseEntity.ok(response);
     }
 }

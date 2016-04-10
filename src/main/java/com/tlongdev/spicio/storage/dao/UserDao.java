@@ -32,5 +32,7 @@ public interface UserDao {
 
     void removeFriend(long userId, long friendId) throws DocumentNotFoundException;
 
-    List<ActivityResponse> getHistory(long userId);
+    List<ActivityResponse> getHistory(long userId, boolean includeCulprit, long ignoreVictim) throws DocumentNotFoundException;
+
+    List<ActivityResponse> getFeed(long userId) throws DocumentNotFoundException;
 }
