@@ -25,12 +25,20 @@ public class FriendController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> addFriend(@PathVariable long userId, @RequestParam("friend_id") long friendId) {
+        if (userId == friendId) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         userDao.addFriend(userId, friendId);
         return ResponseEntity.ok(null);
     }
 
     @RequestMapping(value = "/{friendId}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> removeFriend(@PathVariable long userId, @PathVariable long friendId) {
+        if (userId == friendId) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         userDao.removeFriend(userId, friendId);
         return ResponseEntity.ok(null);
     }
