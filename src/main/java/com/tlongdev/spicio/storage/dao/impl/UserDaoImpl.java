@@ -57,6 +57,25 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<UserResponse> findFriends(long userId) {
+        //Find the user
+        UserDocument userDoc = userRepository.findUserById(userId);
+
+        if (userDoc == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        // Convert documents to responses
+        List<UserResponse> response = new LinkedList<>();
+        for (UserDocument friend : userRepository.findAll(userDoc.getFriends())) {
+            response.add(UserConverter.convertToUserResponse(friend));
+        }
+
+        return response;
+    }
+
+    @Override
     public boolean deleteAllUserData(long userId) {
         // TODO: 2016.03.24. delete all documents related to user, check if user exists?
         userRepository.delete(userId);

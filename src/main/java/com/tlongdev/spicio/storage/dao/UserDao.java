@@ -19,6 +19,8 @@ public interface UserDao {
 
     List<UserResponse> findUsers(String name);
 
+    List<UserResponse> findFriends(long userId);
+
     boolean deleteAllUserData(long userId);
 
     long addUser(UserBody userBody);
