@@ -12,6 +12,8 @@ public class UserSeriesDocument {
     private Map<Integer, Long> skipped = new HashMap<>();
     private Map<Integer, Long> liked = new HashMap<>();
 
+    private long timestamp;
+
     public Map<Integer, Long> getWatched() {
         return watched;
     }
@@ -22,5 +24,13 @@ public class UserSeriesDocument {
 
     public Map<Integer, Long> getLiked() {
         return liked;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
 }

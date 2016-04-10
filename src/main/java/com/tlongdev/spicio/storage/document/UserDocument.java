@@ -1,5 +1,6 @@
 package com.tlongdev.spicio.storage.document;
 
+import com.tlongdev.spicio.util.Util;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -103,5 +104,6 @@ public class UserDocument {
 
     public void addSeries(int traktId) {
         series.put(traktId, new UserSeriesDocument());
+        series.get(traktId).setTimestamp(Util.currentTimeSeconds());
     }
 }
