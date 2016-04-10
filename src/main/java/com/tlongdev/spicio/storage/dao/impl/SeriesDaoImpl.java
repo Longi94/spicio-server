@@ -2,16 +2,23 @@ package com.tlongdev.spicio.storage.dao.impl;
 
 import com.tlongdev.spicio.controller.request.EpisodeBody;
 import com.tlongdev.spicio.controller.request.SeriesBody;
+import com.tlongdev.spicio.controller.response.SeriesResponse;
 import com.tlongdev.spicio.converter.EpisodeConverter;
+import com.tlongdev.spicio.converter.SeriesConverter;
 import com.tlongdev.spicio.exception.DocumentNotFoundException;
 import com.tlongdev.spicio.storage.dao.SeriesDao;
-import com.tlongdev.spicio.storage.document.*;
+import com.tlongdev.spicio.storage.document.EpisodeDocument;
+import com.tlongdev.spicio.storage.document.SeriesDocument;
+import com.tlongdev.spicio.storage.document.UserDocument;
+import com.tlongdev.spicio.storage.document.UserSeriesDocument;
 import com.tlongdev.spicio.storage.mongo.SeriesRepository;
 import com.tlongdev.spicio.storage.mongo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import static com.tlongdev.spicio.converter.SeriesConverter.convertToSeriesDocument;
 
@@ -72,7 +79,7 @@ public class SeriesDaoImpl implements SeriesDao {
     }
 
     @Override
-    public void addEpisode(long userId, int seriesId, EpisodeBody episodeBody) {
+    public void addEpisode(int seriesId, EpisodeBody episodeBody) {
 
         //Check if series exists
         SeriesDocument seriesDoc = seriesRepository.findSeriesByTraktId(seriesId);
@@ -182,5 +189,23 @@ public class SeriesDaoImpl implements SeriesDao {
         user.getSeries().get(seriesId).getLiked().remove(episodeId);
 
         userRepository.save(user);
+    }
+
+    @Override
+    public List<SeriesResponse> getSeries(long userId) {
+        //Find the user
+        UserDocument user = userRepository.findUserById(userId);
+
+        if (user == null) {
+            //User doesn't exist
+            throw new DocumentNotFoundException();
+        }
+
+        List<SeriesResponse> response = new LinkedList<>();
+        for (SeriesDocument seriesDoc : seriesRepository.findAll(user.getSeries().keySet())) {
+            response.add(SeriesConverter.convertToSeriesResponse(seriesDoc));
+        }
+
+        return response;
     }
 }

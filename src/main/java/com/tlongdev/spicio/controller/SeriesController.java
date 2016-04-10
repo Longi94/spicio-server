@@ -24,8 +24,7 @@ public class SeriesController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<SeriesResponse>> getSeries(@PathVariable long userId) {
-        // TODO: 2016.04.10. implement me
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(null);
+        return ResponseEntity.ok().body(seriesDao.getSeries(userId));
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -49,7 +48,7 @@ public class SeriesController {
     @RequestMapping(value = "/{seriesId}/episodes/checks", method = RequestMethod.POST)
     public ResponseEntity<Void> checkEpisode(@PathVariable long userId, @PathVariable int seriesId,
                                              @RequestBody @Valid EpisodeBody episodeBody) {
-        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.addEpisode(seriesId, episodeBody);
         seriesDao.checkEpisode(userId, seriesId, episodeBody);
         return ResponseEntity.ok(null);
     }
@@ -64,7 +63,7 @@ public class SeriesController {
     @RequestMapping(value = "/{seriesId}/episodes/skips", method = RequestMethod.POST)
     public ResponseEntity<Void> skipEpisode(@PathVariable long userId, @PathVariable int seriesId,
                                              @RequestBody @Valid EpisodeBody episodeBody) {
-        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.addEpisode(seriesId, episodeBody);
         seriesDao.skipEpisode(userId, seriesId, episodeBody);
         return ResponseEntity.ok(null);
     }
@@ -79,7 +78,7 @@ public class SeriesController {
     @RequestMapping(value = "/{seriesId}/episodes/likes", method = RequestMethod.POST)
     public ResponseEntity<Void> likeEpisode(@PathVariable long userId, @PathVariable int seriesId,
                                              @RequestBody @Valid EpisodeBody episodeBody) {
-        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.addEpisode(seriesId, episodeBody);
         seriesDao.likeEpisode(userId, seriesId, episodeBody);
         return ResponseEntity.ok(null);
     }
