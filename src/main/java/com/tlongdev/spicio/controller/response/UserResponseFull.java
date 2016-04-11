@@ -3,7 +3,6 @@ package com.tlongdev.spicio.controller.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author longi
@@ -23,8 +22,7 @@ public class UserResponseFull {
     @JsonProperty("google_id")
     private String googleId;
 
-    // TODO: 2016.03.22. needs a better response structure
-    private Set<Long> friends;
+    private List<UserResponse> friends;
 
     private List<SeriesResponse> series;
 
@@ -68,11 +66,11 @@ public class UserResponseFull {
         this.googleId = googleId;
     }
 
-    public Set<Long> getFriends() {
+    public List<UserResponse> getFriends() {
         return friends;
     }
 
-    public void setFriends(Set<Long> friends) {
+    public void setFriends(List<UserResponse> friends) {
         this.friends = friends;
     }
 

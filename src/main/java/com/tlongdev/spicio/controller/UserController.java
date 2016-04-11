@@ -33,7 +33,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> addUser(@Valid @RequestBody UserBody user) {
+    public ResponseEntity<Void> addUser(@Valid @RequestBody UserBody user) {
         //At least one of them shouldn't be null
         if (user.getFacebookId() == null && user.getGoogleId() == null) {
             return ResponseEntity.badRequest().body(null);
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "/{userId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteUser(@PathVariable long userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable long userId) {
         userDao.deleteAllUserData(userId);
         return ResponseEntity.ok(null);
     }

@@ -1,6 +1,7 @@
 package com.tlongdev.spicio.storage.dao;
 
 import com.tlongdev.spicio.controller.request.UserBody;
+import com.tlongdev.spicio.controller.response.ActivityResponse;
 import com.tlongdev.spicio.controller.response.UserResponse;
 import com.tlongdev.spicio.controller.response.UserResponseFull;
 import com.tlongdev.spicio.exception.DocumentNotFoundException;
@@ -19,9 +20,19 @@ public interface UserDao {
 
     List<UserResponse> findUsers(String name);
 
+    List<UserResponse> findFriends(long userId);
+
     boolean deleteAllUserData(long userId);
 
     long addUser(UserBody userBody);
 
     UserResponseFull getUserFull(long userId) throws DocumentNotFoundException;
+
+    void addFriend(long userId, long friendId) throws DocumentNotFoundException;
+
+    void removeFriend(long userId, long friendId) throws DocumentNotFoundException;
+
+    List<ActivityResponse> getHistory(long userId, boolean includeCulprit, long ignoreVictim) throws DocumentNotFoundException;
+
+    List<ActivityResponse> getFeed(long userId) throws DocumentNotFoundException;
 }

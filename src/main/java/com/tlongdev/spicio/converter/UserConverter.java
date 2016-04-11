@@ -24,14 +24,14 @@ public class UserConverter {
         return userResponse;
     }
 
-    public static UserResponseFull convertToUserResponseFull(UserDocument user, Iterable<SeriesDocument> seriesDocs) {
+    public static UserResponseFull convertToUserResponseFull(UserDocument user, Iterable<SeriesDocument> seriesDocs,
+                                                             Iterable<UserDocument> userDocs) {
         UserResponseFull userResponse = new UserResponseFull();
         userResponse.setId(user.getId());
         userResponse.setName(user.getName());
         userResponse.setEmail(user.getEmail());
         userResponse.setFacebookId(user.getFacebookId());
         userResponse.setGoogleId(user.getGoogleId());
-        userResponse.setFriends(user.getFriends());
 
         //Convert the series objects to responses
         List<SeriesResponse> seriesResponses = new LinkedList<>();
@@ -43,9 +43,16 @@ public class UserConverter {
             );
             seriesResponses.add(seriesResponse);
         }
-
         //Add the series
         userResponse.setSeries(seriesResponses);
+
+        //Convert the friend objects to responses
+        List<UserResponse> friendResponses = new LinkedList<>();
+        for (UserDocument friendDoc: userDocs) {
+            friendResponses.add(convertToUserResponse(friendDoc));
+        }
+        //Add the friends
+        userResponse.setFriends(friendResponses);
 
         return userResponse;
     }

@@ -2,12 +2,15 @@ package com.tlongdev.spicio.controller;
 
 import com.tlongdev.spicio.controller.request.EpisodeBody;
 import com.tlongdev.spicio.controller.request.SeriesBody;
+import com.tlongdev.spicio.controller.response.SeriesResponse;
+import com.tlongdev.spicio.controller.response.UserEpisodesResponse;
 import com.tlongdev.spicio.storage.dao.SeriesDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @author longi
@@ -18,6 +21,11 @@ import javax.validation.Valid;
 public class SeriesController {
 
     @Autowired private SeriesDao seriesDao;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<SeriesResponse>> getSeries(@PathVariable long userId) {
+        return ResponseEntity.ok(seriesDao.getSeries(userId));
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Void> addSeries(@PathVariable long userId, @Valid @RequestBody SeriesBody seriesBody) {
@@ -31,10 +39,16 @@ public class SeriesController {
         return ResponseEntity.ok(null);
     }
 
+    @RequestMapping(value = "/{seriesId}/episodes", method = RequestMethod.GET)
+    public ResponseEntity<UserEpisodesResponse> getEpisodes(@PathVariable long userId, @PathVariable int seriesId) {
+        UserEpisodesResponse response = seriesDao.getEpisodes(userId, seriesId);
+        return ResponseEntity.ok(response);
+    }
+
     @RequestMapping(value = "/{seriesId}/episodes/checks", method = RequestMethod.POST)
     public ResponseEntity<Void> checkEpisode(@PathVariable long userId, @PathVariable int seriesId,
                                              @RequestBody @Valid EpisodeBody episodeBody) {
-        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.addEpisode(seriesId, episodeBody);
         seriesDao.checkEpisode(userId, seriesId, episodeBody);
         return ResponseEntity.ok(null);
     }
@@ -49,7 +63,7 @@ public class SeriesController {
     @RequestMapping(value = "/{seriesId}/episodes/skips", method = RequestMethod.POST)
     public ResponseEntity<Void> skipEpisode(@PathVariable long userId, @PathVariable int seriesId,
                                              @RequestBody @Valid EpisodeBody episodeBody) {
-        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.addEpisode(seriesId, episodeBody);
         seriesDao.skipEpisode(userId, seriesId, episodeBody);
         return ResponseEntity.ok(null);
     }
@@ -64,7 +78,7 @@ public class SeriesController {
     @RequestMapping(value = "/{seriesId}/episodes/likes", method = RequestMethod.POST)
     public ResponseEntity<Void> likeEpisode(@PathVariable long userId, @PathVariable int seriesId,
                                              @RequestBody @Valid EpisodeBody episodeBody) {
-        seriesDao.addEpisode(userId, seriesId, episodeBody);
+        seriesDao.addEpisode(seriesId, episodeBody);
         seriesDao.likeEpisode(userId, seriesId, episodeBody);
         return ResponseEntity.ok(null);
     }
