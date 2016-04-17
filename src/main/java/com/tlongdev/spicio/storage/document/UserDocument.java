@@ -104,8 +104,8 @@ public class UserDocument {
 
     public void addSeries(int traktId) {
         if (!series.containsKey(traktId)) {
-            series.get(traktId).setTimestamp(Util.currentTimeSeconds());
             series.put(traktId, new UserSeriesDocument());
+            series.get(traktId).setTimestamp(Util.currentTimeSeconds());
         }
     }
 }
