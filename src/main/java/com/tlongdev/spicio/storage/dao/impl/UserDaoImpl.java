@@ -25,6 +25,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.tlongdev.spicio.converter.UserConverter.convertToUserResponse;
+
 /**
  * @author Long
  * @since 2016. 03. 15.
@@ -41,13 +43,28 @@ public class UserDaoImpl implements UserDao {
         //Find the user
         UserDocument userDoc = userRepository.findUserById(userId);
 
-        if (userDoc != null) {
-            //Convert user to response
-            return UserConverter.convertToUserResponse(userDoc);
-        } else {
+        if (userDoc == null) {
             //User doesn't exist
             throw new DocumentNotFoundException();
         }
+        //Convert user to response
+        UserResponse userResponse = UserConverter.convertToUserResponse(userDoc);
+
+        addCounts(userResponse, userDoc);
+
+        return userResponse;
+    }
+
+    private void addCounts(UserResponse response, UserDocument document) {
+        //Get the number of series
+        response.setSeriesCount(document.getSeries().size());
+
+        //Get the number of episodes
+        int episodeCount = 0;
+        for (Map.Entry<Integer, UserSeriesDocument> entry : document.getSeries().entrySet()) {
+            episodeCount += entry.getValue().getWatched().size();
+        }
+        response.setEpisodeCount(episodeCount);
     }
 
     @Override
@@ -58,7 +75,9 @@ public class UserDaoImpl implements UserDao {
         //Convert users to responses
         List<UserResponse> users = new LinkedList<>();
         for (UserDocument userDoc : userDocs) {
-            users.add(UserConverter.convertToUserResponse(userDoc));
+            UserResponse response = convertToUserResponse(userDoc);
+            addCounts(response, userDoc);
+            users.add(response);
         }
 
         return users;
@@ -77,7 +96,9 @@ public class UserDaoImpl implements UserDao {
         // Convert documents to responses
         List<UserResponse> response = new LinkedList<>();
         for (UserDocument friend : userRepository.findAll(userDoc.getFriends().keySet())) {
-            response.add(UserConverter.convertToUserResponse(friend));
+            UserResponse userResponse = convertToUserResponse(friend);
+            addCounts(userResponse, userDoc);
+            response.add(userResponse);
         }
 
         return response;
@@ -137,7 +158,11 @@ public class UserDaoImpl implements UserDao {
         Iterable<UserDocument> friendDocs = userRepository.findAll(userDoc.getFriends().keySet());
 
         //Convert the user to a response
-        return UserConverter.convertToUserResponseFull(userDoc, seriesDocs, friendDocs);
+        UserResponseFull response = UserConverter.convertToUserResponseFull(userDoc, seriesDocs, friendDocs);
+
+        addCounts(response, userDoc);
+
+        return response;
     }
 
     @Override
@@ -192,7 +217,7 @@ public class UserDaoImpl implements UserDao {
         List<ActivityResponse> activities = new LinkedList<>();
         UserResponse culprit = null;
         if (includeCulprit) {
-            culprit = UserConverter.convertToUserResponse(userDoc);
+            culprit = convertToUserResponse(userDoc);
         }
 
         //Add the befriending activities
@@ -201,7 +226,7 @@ public class UserDaoImpl implements UserDao {
                 ActivityResponse response = new ActivityResponse();
                 response.setType(ActivityResponse.BECAME_FRIENDS);
                 response.setTimestamp(userDoc.getFriends().get(friendDoc.getId()));
-                response.setVictim(UserConverter.convertToUserResponse(friendDoc));
+                response.setVictim(convertToUserResponse(friendDoc));
                 response.setCulprit(culprit);
                 activities.add(response);
             }

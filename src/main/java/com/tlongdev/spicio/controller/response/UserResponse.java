@@ -1,5 +1,9 @@
 package com.tlongdev.spicio.controller.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * @author longi
  * @since 2016.03.22.
@@ -13,6 +17,14 @@ public class UserResponse {
     private String email;
 
     private String avatar;
+
+    @JsonProperty("series_count")
+    @JsonInclude(Include.NON_NULL)
+    private Integer seriesCount;
+
+    @JsonProperty("episode_count")
+    @JsonInclude(Include.NON_NULL)
+    private Integer episodeCount;
 
     public long getId() {
         return id;
@@ -44,5 +56,21 @@ public class UserResponse {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Integer getSeriesCount() {
+        return seriesCount;
+    }
+
+    public void setSeriesCount(Integer seriesCount) {
+        this.seriesCount = seriesCount;
+    }
+
+    public Integer getEpisodeCount() {
+        return episodeCount;
+    }
+
+    public void setEpisodeCount(Integer episodeCount) {
+        this.episodeCount = episodeCount;
     }
 }
