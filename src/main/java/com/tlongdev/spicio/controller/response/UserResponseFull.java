@@ -8,13 +8,7 @@ import java.util.List;
  * @author longi
  * @since 2016.03.22.
  */
-public class UserResponseFull {
-
-    private long id;
-
-    private String name;
-
-    private String email;
+public class UserResponseFull extends UserResponse {
 
     @JsonProperty("facebook_id")
     private String facebookId;
@@ -25,30 +19,6 @@ public class UserResponseFull {
     private List<UserResponse> friends;
 
     private List<SeriesResponse> series;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 
     public String getFacebookId() {
         return facebookId;

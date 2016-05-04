@@ -21,6 +21,7 @@ public class UserConverter {
         userResponse.setId(user.getId());
         userResponse.setName(user.getName());
         userResponse.setEmail(user.getEmail());
+        userResponse.setAvatar(user.getAvatar());
         return userResponse;
     }
 
@@ -32,6 +33,7 @@ public class UserConverter {
         userResponse.setEmail(user.getEmail());
         userResponse.setFacebookId(user.getFacebookId());
         userResponse.setGoogleId(user.getGoogleId());
+        userResponse.setAvatar(user.getAvatar());
 
         //Convert the series objects to responses
         List<SeriesResponse> seriesResponses = new LinkedList<>();
@@ -63,6 +65,7 @@ public class UserConverter {
         userDocument.setEmail(userBody.getEmail());
         userDocument.setFacebookId(userBody.getFacebookId());
         userDocument.setGoogleId(userBody.getGoogleId());
+        userDocument.setAvatar(userBody.getAvatar());
         return userDocument;
     }
 }

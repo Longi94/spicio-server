@@ -12,6 +12,8 @@ public class UserResponse {
 
     private String email;
 
+    private String avatar;
+
     public long getId() {
         return id;
     }
@@ -34,5 +36,13 @@ public class UserResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

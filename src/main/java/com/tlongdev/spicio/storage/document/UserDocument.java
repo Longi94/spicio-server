@@ -21,6 +21,8 @@ public class UserDocument {
 
     private String email;
 
+    private String avatar;
+
     @Indexed
     private String facebookId;
 
@@ -107,5 +109,13 @@ public class UserDocument {
             series.put(traktId, new UserSeriesDocument());
             series.get(traktId).setTimestamp(Util.currentTimeSeconds());
         }
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }
