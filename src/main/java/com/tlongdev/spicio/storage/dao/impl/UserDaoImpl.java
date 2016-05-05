@@ -17,7 +17,6 @@ import com.tlongdev.spicio.storage.document.UserDocument;
 import com.tlongdev.spicio.storage.document.UserSeriesDocument;
 import com.tlongdev.spicio.storage.mongo.SeriesRepository;
 import com.tlongdev.spicio.storage.mongo.UserRepository;
-import com.tlongdev.spicio.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -178,8 +177,8 @@ public class UserDaoImpl implements UserDao {
             throw new DocumentNotFoundException();
         }
 
-        userDoc.getFriends().put(friendId, Util.currentTimeSeconds());
-        friendDoc.getFriends().put(userId, Util.currentTimeSeconds());
+        userDoc.getFriends().put(friendId, System.currentTimeMillis());
+        friendDoc.getFriends().put(userId, System.currentTimeMillis());
         userRepository.save(userDoc);
         userRepository.save(friendDoc);
     }
