@@ -107,7 +107,7 @@ public class UserDocument {
     public void addSeries(int traktId) {
         if (!series.containsKey(traktId)) {
             series.put(traktId, new UserSeriesDocument());
-            series.get(traktId).setTimestamp(Util.currentTimeSeconds());
+            series.get(traktId).setTimestamp(System.currentTimeMillis());
         }
     }
 
